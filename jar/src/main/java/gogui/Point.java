@@ -10,7 +10,7 @@ public class Point extends GeoObject implements Comparable {
     }
 
     public static Point from(Point p) {
-        Point newPoint = new Point(p.x,p.y);
+        Point newPoint = new Point(p.x, p.y);
         newPoint.setStatus(p.getStatus());
 
         return newPoint;
@@ -83,5 +83,10 @@ public class Point extends GeoObject implements Comparable {
         temp = Double.doubleToLongBits(y);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Point{" + "x=" + x + ", y=" + y + '}';
     }
 }

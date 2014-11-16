@@ -1,0 +1,74 @@
+[
+    {
+        "points": [
+            {
+                "x": 203,
+                "y": 144,
+                "state": "normal",
+                "pointID": 0
+            },
+            {
+                "x": 619,
+                "y": 248,
+                "state": "normal",
+                "pointID": 1
+            }
+        ],
+        "state": "normal",
+        "lineID": 0
+    },
+    {
+        "points": [
+            {
+                "x": 260,
+                "y": 414,
+                "state": "normal",
+                "pointID": 2
+            },
+            {
+                "x": 696,
+                "y": 342,
+                "state": "normal",
+                "pointID": 3
+            }
+        ],
+        "state": "normal",
+        "lineID": 1
+    },
+    {
+        "points": [
+            {
+                "x": 306,
+                "y": 307,
+                "state": "normal",
+                "pointID": 4
+            },
+            {
+                "x": 480,
+                "y": 180,
+                "state": "normal",
+                "pointID": 5
+            }
+        ],
+        "state": "normal",
+        "lineID": 2
+    },
+    {
+        "points": [
+            {
+                "x": 316,
+                "y": 227,
+                "state": "normal",
+                "pointID": 6
+            },
+            {
+                "x": 653,
+                "y": 379,
+                "state": "normal",
+                "pointID": 7
+            }
+        ],
+        "state": "normal",
+        "lineID": 3
+    }
+]

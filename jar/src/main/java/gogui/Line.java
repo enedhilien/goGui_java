@@ -146,6 +146,12 @@ public class Line extends GeoObject {
         return false;
     }
 
+    /**
+     * Returns point of intersection taking only line parameters under consideration, not lines fragments bounded by points.
+     *
+     * @param line
+     * @return point of intersection
+     */
     public Point intersectionPoint(Line line) {
         //Ax+By+C=0
         // y = -A/Bx -C/B
@@ -166,19 +172,56 @@ public class Line extends GeoObject {
         return p;
     }
 
+    public Point intersectionPoint2(Line line) {
+        //Ax+By+C=0
+        // y = -A/Bx -C/B
+
+        // y = ax + c
+        // y = bx + d
+
+        double a = get_a();
+        double c = get_b();
+
+        double b = line.get_a();
+        double d = line.get_b();
+
+        Point intersectionPoint = new Point();
+        intersectionPoint.x = ((d - c) / (a - b));
+        intersectionPoint.y = ((a * d - b * c) / (a - b));
+
+        if (pointInXRange(intersectionPoint, this.getLeftPoint().x, this.getRightPoint().x) &&
+                pointInXRange(intersectionPoint, line.getLeftPoint().x, line.getRightPoint().x)) {
+            return intersectionPoint;
+        }
+
+        return null;
+    }
+
+    private boolean pointInXRange(Point p, double leftX, double rightX) {
+        return p.x >= leftX && p.x <= rightX;
+    }
+
     // y = -(Ax + C) / B
-    double getY(double x) {
+    public double getY(double x) {
         return -((getA() * x + getC()) / getB());
     }
 
     // Converts degrees to radians.
-    double degreesToRadians(double angleDegrees) {
+    public double degreesToRadians(double angleDegrees) {
         return angleDegrees * Commons.M_PI / 180.0;
     }
 
     // Converts radians to degrees.
-    double radiansToDegrees(double angleRadians) {
+    public double radiansToDegrees(double angleRadians) {
         return angleRadians * 180.0 / Commons.M_PI;
+    }
+
+    @Override
+    public String toString() {
+        return "Line{" +
+                "point1=" + point1 +
+                ", point2=" + point2 +
+                '}';
     }
 
     private class Parameters {

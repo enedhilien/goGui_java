@@ -22,4 +22,12 @@ public abstract class GeoObject {
         status = s;
     }
 
+    public void activate() {
+        status = Status.Active;
+    }
+
+    public void processed() {
+        status = Status.Processed;
+    }
+
 }
