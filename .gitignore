@@ -8,9 +8,10 @@
 *.war
 *.ear
 
-.idea/
+.idea/*
 *.iml
 *.iws
 
 log/
 target/
+

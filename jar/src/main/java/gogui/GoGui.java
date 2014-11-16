@@ -1,11 +1,14 @@
 package gogui;
 
 import gogui.history.History;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class GoGui {
@@ -33,6 +36,37 @@ public class GoGui {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public static GeoList<Line> loadLinesFromJson(String s) {
+
+        GeoList<Line> lines = new GeoList<>();
+        JSONParser parser = new JSONParser();
+
+        try {
+            Object obj = parser.parse(new FileReader(s));
+
+            JSONArray allObjects = (JSONArray) obj;
+            Iterator<JSONObject> iterator = allObjects.iterator();
+            while (iterator.hasNext()) {
+                JSONObject next = iterator.next();
+                JSONArray points = (JSONArray) next.get("points");
+                Iterator<JSONObject> pointIterator = points.iterator();
+                JSONObject point1 = pointIterator.next();
+                JSONObject point2 = pointIterator.next();
+                int point1X = Integer.parseInt(point1.get("x").toString());
+                int point1Y = Integer.parseInt(point1.get("y").toString());
+                int point2X = Integer.parseInt(point2.get("x").toString());
+                int point2Y = Integer.parseInt(point2.get("y").toString());
+
+                Line line = new Line(new Point(point1X, point1Y), new Point(point2X, point2Y));
+                lines.push_back(line);
+            }
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return lines;
     }
 
 

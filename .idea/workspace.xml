@@ -1,29 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="19fe0a2b-0905-4dc7-b142-f5baa45b59d2" name="Default" comment="Parsing">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lab3/src/main/resources/input.json" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\.idea\libraries\Maven__org_glassfish_json_1_0_4.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\target\classes\gogui\Commons.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\target\classes\gogui\GeoList.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\target\classes\gogui\GeoObject$Status.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\target\classes\gogui\GeoObject.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\target\classes\gogui\GoGui.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\target\classes\gogui\JsonPrinter$1.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\target\classes\gogui\JsonPrinter$InternalLine.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\target\classes\gogui\JsonPrinter.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\target\classes\gogui\Line$Parameters.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\target\classes\gogui\Line.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\target\classes\gogui\Point.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\target\classes\gogui\Polygon.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\target\classes\gogui\VisualizationMethod.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\target\classes\gogui\history\History.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\target\classes\gogui\history\State.class" afterPath="" />
-      <change type="DELETED" beforePath="C:\home\workspaces\aaaaStudia\Semestr_VII\GoGUI\target\test-classes\gogui\main\MainTest.class" afterPath="" />
+    <list default="true" id="19fe0a2b-0905-4dc7-b142-f5baa45b59d2" name="Default" comment="Moved">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jar/src/main/java/gogui/GoGui.java" afterPath="$PROJECT_DIR$/jar/src/main/java/gogui/GoGui.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lab3/src/main/java/lab3/Main.java" afterPath="$PROJECT_DIR$/lab3/src/main/java/lab3/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lab3/lab3.iml" afterPath="$PROJECT_DIR$/lab3/lab3.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lab3/pom.xml" afterPath="$PROJECT_DIR$/lab3/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="GoGUI.iws" />
@@ -100,8 +81,8 @@
       <file leaf-file-name="Main.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lab3/src/main/java/lab3/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="669" max-vertical-offset="1122">
-              <caret line="54" column="36" selection-start-line="54" selection-start-column="36" selection-end-line="54" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
+              <caret line="17" column="53" selection-start-line="17" selection-start-column="53" selection-end-line="17" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -110,8 +91,18 @@
       <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.32032302" vertical-offset="0" max-vertical-offset="743">
-              <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
+            <state vertical-scroll-proportion="0.2361111" vertical-offset="0" max-vertical-offset="720">
+              <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GoGui.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jar/src/main/java/gogui/GoGui.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="549" max-vertical-offset="1292">
+              <caret line="65" column="50" selection-start-line="65" selection-start-column="50" selection-end-line="65" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -120,7 +111,7 @@
       <file leaf-file-name="input.json" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lab3/src/main/resources/input.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="1955">
+            <state vertical-scroll-proportion="-0.0" vertical-offset="34" max-vertical-offset="1955">
               <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="15" />
               <folding />
             </state>
@@ -168,8 +159,9 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/jar/pom.xml" />
         <option value="$PROJECT_DIR$/lab3/src/main/resources/input.json" />
-        <option value="$PROJECT_DIR$/lab3/src/main/java/lab3/Main.java" />
         <option value="$PROJECT_DIR$/lab3/pom.xml" />
+        <option value="$PROJECT_DIR$/jar/src/main/java/gogui/GoGui.java" />
+        <option value="$PROJECT_DIR$/lab3/src/main/java/lab3/Main.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
@@ -730,12 +722,17 @@
       <workItem from="1415833772057" duration="5973000" />
       <workItem from="1416092870148" duration="1825000" />
       <workItem from="1416123038541" duration="17643000" />
-      <workItem from="1416143657770" duration="56000" />
+      <workItem from="1416143657770" duration="218000" />
     </task>
+    <task id="LOCAL-00001" summary="Git ignore added. Loading lines from file.">
+      <created>1416143745579</created>
+      <updated>1416143745579</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30873000" />
+    <option name="totallyTimeSpent" value="31035000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -756,6 +753,7 @@
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JSF" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32814527" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -768,7 +766,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32814527" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32814527" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -787,6 +784,8 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
+    <MESSAGE value="Git ignore added. Loading lines from file." />
+    <option name="LAST_COMMIT_MESSAGE" value="Git ignore added. Loading lines from file." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -811,7 +810,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/lab3/src/main/java/lab3/Main.java</url>
-          <line>57</line>
+          <line>20</line>
           <properties />
           <option name="timeStamp" value="20" />
         </line-breakpoint>
@@ -943,6 +942,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
           <caret line="12" column="8" selection-start-line="12" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -969,14 +969,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lab3/src/main/resources/input.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="1955">
-          <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lab3/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="493">
@@ -987,16 +979,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lab3/src/main/java/lab3/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="669" max-vertical-offset="1122">
-          <caret line="54" column="36" selection-start-line="54" selection-start-column="36" selection-end-line="54" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
+          <caret line="17" column="53" selection-start-line="17" selection-start-column="53" selection-end-line="17" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jar/src/main/java/gogui/GoGui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="549" max-vertical-offset="1292">
+          <caret line="65" column="50" selection-start-line="65" selection-start-column="50" selection-end-line="65" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lab3/src/main/resources/input.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="34" max-vertical-offset="1955">
+          <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32032302" vertical-offset="0" max-vertical-offset="743">
-          <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.2361111" vertical-offset="0" max-vertical-offset="720">
+          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
           <folding />
         </state>
       </provider>
