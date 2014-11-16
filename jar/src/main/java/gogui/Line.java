@@ -122,6 +122,14 @@ public class Line extends GeoObject {
         }
     }
 
+    public Point getPoint1() {
+        return point1;
+    }
+
+    public Point getPoint2() {
+        return point2;
+    }
+
     public boolean containsPoint(Point point) {
         Point left = getLeftPoint();
         Point right = getRightPoint();

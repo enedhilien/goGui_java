@@ -13,12 +13,10 @@ import java.util.List;
 
 public class GoGui {
 
-    //    private static List<GeoList<Point>> pointsVector = new ArrayList<>();
-//    private static List<GeoList<Line>> lineVector = new ArrayList<>();
     private static History history = new History();
     private static List<GeoList> activeLists = new ArrayList<>();
 
-    public static void clean() {
+    public static void clear() {
         history.clear();
         activeLists.clear();
     }

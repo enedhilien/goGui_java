@@ -166,10 +166,6 @@ public class JsonPrinter {
     private class InternalLine implements Comparable {
         int point1id, point2id;
 
-        boolean equals(InternalLine that) {
-            return point1id == that.point1id && point2id == that.point2id;
-        }
-
         boolean isSmaller(InternalLine that) {
             return point1id == that.point1id ? point2id < that.point2id : point1id < that.point1id;
         }
@@ -189,7 +185,7 @@ public class JsonPrinter {
             if (point1id == that.point1id) {
                 if (point2id < that.point2id) {
                     return -1;
-                } else if (point2id == that.point2id) {
+                } else if (point2id > that.point2id) {
                     return 1;
                 } else return 0;
             } else if (point1id < that.point1id) {
