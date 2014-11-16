@@ -1,25 +1,30 @@
 package lab3;
 
-import gogui.*;
+import gogui.GeoList;
+import gogui.GoGui;
+import gogui.Line;
+import gogui.Point;
+import lab3.structures.Q;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Main {
-
-    public static final String LAB3_SRC_MAIN_RESOURCES = "lab3\\src\\main\\resources\\";
-    public static final String INPUT_FILE_EXTENSION = ".json";
+public class Main2 {
 
     public static void main(String[] args) {
+
         fireAlgorithm("input2");
 
     }
 
     private static void fireAlgorithm(String fileName) {
-        GeoList<Line> lines = GoGui.loadLinesFromJson(LAB3_SRC_MAIN_RESOURCES + fileName+ INPUT_FILE_EXTENSION);
+        GeoList<Line> lines = GoGui.loadLinesFromJson(Main.LAB3_SRC_MAIN_RESOURCES + fileName + Main.INPUT_FILE_EXTENSION);
+
         GeoList<Point> points = new GeoList<>();
         GeoList<Line> helper = new GeoList<>();
         GeoList<Point> intersectionPoints = new GeoList<>();
-
 
         Map<Point, Line> pointToLine = new HashMap<>();
 
@@ -30,14 +35,15 @@ public class Main {
             pointToLine.put(line.getPoint2(), line);
         }
 
-        Collections.sort(points);
+        Q q = new Q(points);
 
         GeoList<Line> T = new GeoList<>(false);
         GoGui.snapshot();
 
         Line broomstick = null;
-        for (Point p : points) {
-
+        boolean cross = false;
+        while ( q.hasNext()) {
+            Point p = q.next();
             double x = p.x;
             if (broomstick == null) {
                 broomstick = new Line(new Point(x, 0.0), new Point(x, 1000.0));
@@ -67,12 +73,12 @@ public class Main {
                 }
                 return 0;
             };
-            Collections.sort(T, lineComparator);
-            int sIndex = T.indexOf(s);
 
             // left end of segment
             if (p.x < other.x) {
                 T.push_back(s);
+                Collections.sort(T, lineComparator);
+                int sIndex = T.indexOf(s);
 //                assert (it != T.end()); // this must be inside our container
                 if (sIndex < T.size() - 1) {
                     Line line = T.get(sIndex + 1);
@@ -81,9 +87,9 @@ public class Main {
                     GoGui.snapshot();
 
                     // if segments cross(s, sn)
-                    Point intersection = s.intersectionPoint2(line);
+                    Point intersection = s.intersectionPoint(line);
 
-                    if (intersection != null) {
+                    if (line.containsPoint(intersection) && s.containsPoint(intersection)) {
                         System.out.println("Lines : " + s + " and " + line + " intersects at: " + intersection);
                         intersectionPoints.push_back(intersection);
                     } else {
@@ -108,7 +114,9 @@ public class Main {
                     }
                 }
             } else { // right end of segment
-                if (sIndex > 0 && sIndex < T.size()-1) {
+                Collections.sort(T, lineComparator);
+                int sIndex = T.indexOf(s);
+                if (sIndex > 0 && sIndex < T.size() - 1) {
                     Line line = T.get(sIndex - 1);
                     Line line2 = T.get(sIndex + 1);
 
@@ -117,16 +125,17 @@ public class Main {
                     GoGui.snapshot();
 
                     // if segments cross(s, sn)
-                    Point intersection = line.intersectionPoint( line2);
+                    Point intersection = line.intersectionPoint(line2);
 
-                    if (line.containsPoint(intersection) && line2.containsPoint(intersection)){
+                    if (line.containsPoint(intersection) && line2.containsPoint(intersection)) {
                         System.out.println("Lines : " + s + " and " + line + " intersects at: " + intersection);
                         intersectionPoints.push_back(intersection);
                     }
 
-                    T.remove(sIndex);
+
                     Collections.sort(T, lineComparator);
                 }
+                T.remove(sIndex);
             }
 
             s.processed();
@@ -134,8 +143,6 @@ public class Main {
             helper.clear();
         }
 
-        GoGui.saveJSON("C:\\home\\aaaaStudia\\Semestr_VII\\Geometria\\gogui\\visualization-grunt\\public\\data\\sweep."+fileName+".data.json");
+        GoGui.saveJSON("C:\\home\\aaaaStudia\\Semestr_VII\\Geometria\\gogui\\visualization-grunt\\public\\data\\sweep." + fileName + ".data.json");
     }
-
-
 }
