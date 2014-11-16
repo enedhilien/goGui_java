@@ -22,9 +22,15 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="GoGUI" />
+        <module name="jar" />
+        <module name="lab3" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="GoGUI" target="1.8" />
+      <module name="jar" target="1.8" />
+      <module name="lab3" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
 
