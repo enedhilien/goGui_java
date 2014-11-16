@@ -1,0 +1,110 @@
+[
+    {
+        "points": [
+            {
+                "x": 71,
+                "y": 102,
+                "state": "normal",
+                "pointID": 0
+            },
+            {
+                "x": 151,
+                "y": 146,
+                "state": "normal",
+                "pointID": 1
+            }
+        ],
+        "state": "normal",
+        "lineID": 0
+    },
+    {
+        "points": [
+            {
+                "x": 246,
+                "y": 73,
+                "state": "normal",
+                "pointID": 2
+            },
+            {
+                "x": 324,
+                "y": 149,
+                "state": "normal",
+                "pointID": 3
+            }
+        ],
+        "state": "normal",
+        "lineID": 1
+    },
+    {
+        "points": [
+            {
+                "x": 256,
+                "y": 182,
+                "state": "normal",
+                "pointID": 4
+            },
+            {
+                "x": 108,
+                "y": 249,
+                "state": "normal",
+                "pointID": 5
+            }
+        ],
+        "state": "normal",
+        "lineID": 2
+    },
+    {
+        "points": [
+            {
+                "x": 224,
+                "y": 243,
+                "state": "normal",
+                "pointID": 6
+            },
+            {
+                "x": 330,
+                "y": 320,
+                "state": "normal",
+                "pointID": 7
+            }
+        ],
+        "state": "normal",
+        "lineID": 3
+    },
+    {
+        "points": [
+            {
+                "x": 318,
+                "y": 82,
+                "state": "normal",
+                "pointID": 8
+            },
+            {
+                "x": 281,
+                "y": 139,
+                "state": "normal",
+                "pointID": 9
+            }
+        ],
+        "state": "normal",
+        "lineID": 4
+    },
+    {
+        "points": [
+            {
+                "x": 378,
+                "y": 208,
+                "state": "normal",
+                "pointID": 10
+            },
+            {
+                "x": 407,
+                "y": 272,
+                "state": "normal",
+                "pointID": 11
+            }
+        ],
+        "state": "normal",
+        "lineID": 5
+    }
+]
