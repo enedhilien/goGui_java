@@ -11,6 +11,8 @@
     <modules>
         <module>lab3</module>
         <module>jar</module>
+        <module>lab4</module>
+        <module>lab2</module>
     </modules>
 
     <dependencies>
