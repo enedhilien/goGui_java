@@ -7,7 +7,7 @@ public class Commons {
     public static final double M_PI = 3.14159265358979323846;
 
     public static boolean compareDouble(double a, double b, double epsilon) {
-        return Math.abs(a - b) < EPSILON;
+        return Math.abs(a - b) < epsilon;
     }
 
     public static boolean compareDouble(double a, double b) {

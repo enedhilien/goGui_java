@@ -2,7 +2,6 @@ package gogui;
 
 public abstract class GeoObject {
 
-
     private Status status = Status.Normal;
 
     public enum Status {
@@ -29,5 +28,10 @@ public abstract class GeoObject {
     public void processed() {
         status = Status.Processed;
     }
+
+    public void normalize() {
+        status = Status.Normal;
+    }
+
 
 }

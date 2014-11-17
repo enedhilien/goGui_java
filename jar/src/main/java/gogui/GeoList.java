@@ -32,4 +32,13 @@ public class GeoList<T extends GeoObject> extends ArrayList<T> {
     public void push_back(T object) {
         this.add(size(), object);
     }
+
+    public T back() {
+        return this.get(this.size() - 1);
+    }
+
+    public void setStatus(GeoObject.Status status) {
+        forEach(x -> x.setStatus(status));
+    }
+
 }
