@@ -3,12 +3,15 @@ package lab3.structures;
 import gogui.GeoList;
 import gogui.Point;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Q {
 
     private GeoList<Point> points;
     private Point currentPoint;
+    private GeoList<Point> intersectionPoints = new GeoList<>();
 
     public Q(GeoList<Point> points) {
         this.points = points;
@@ -20,7 +23,7 @@ public class Q {
     }
 
     public boolean hasNext() {
-        return points.indexOf(currentPoint()) < points.size()-1;
+        return points.indexOf(currentPoint()) < points.size() - 1;
     }
 
     public Point next() {
@@ -37,4 +40,14 @@ public class Q {
         points.add(p);
         Collections.sort(points);
     }
+
+    public void addIntersectionPoint(Point p) {
+        intersectionPoints.add(p);
+    }
+
+    public boolean isIntersectionPoint(Point p) {
+        return intersectionPoints.contains(p);
+    }
+
+
 }
