@@ -8,37 +8,44 @@ import java.util.*;
 
 public class Q {
 
-    private GeoList<Point> points;
-    private Point currentPoint;
+    private GeoList<Point> guiPoints;
+//    private Point currentPoint = null;
+    private int currentIndex = -1;
+    private ArrayList<Point> points = new ArrayList<>();
     private GeoList<Point> intersectionPoints = new GeoList<>();
 
 
     public Q(GeoList<Point> points) {
-        this.points = points;
-        Collections.sort(points);
-    }
-
-    public Point currentPoint() {
-        return currentPoint;
+        this.guiPoints = new GeoList<>(points);
+        this.points.addAll(points);
+        Collections.sort(this.points);
     }
 
     public boolean hasNext() {
-        return points.indexOf(currentPoint()) < points.size() - 1;
+        return (currentIndex == -1 && points.size() > 0 ) || (currentIndex < points.size() - 1);
     }
 
     public Point next() {
         if (hasNext()) {
-            int currentIndex = points.indexOf(currentPoint);
-            currentPoint = points.get(currentIndex + 1);
-            return currentPoint;
+            return points.get(++currentIndex);
         } else {
             return null;
         }
     }
 
     public void addPoint(Point p) {
-        points.add(p);
-        Collections.sort(points);
+        int insertIndex = 0;
+
+        for ( int i = 0 ; i < points.size() ; i++) {
+            if ( points.get(i).x > p.x) {
+                insertIndex = i;
+                break;
+            }
+            insertIndex++;
+        }
+        points.add(insertIndex, p);
+//        points.add(p);
+//        Collections.sort(points);
     }
 
     public void addIntersectionPoint(Point intersectionLine) {
@@ -50,5 +57,7 @@ public class Q {
     }
 
 
-
+    public Set<Point> getIntersectionPoints() {
+        return new HashSet<>(intersectionPoints);
+    }
 }

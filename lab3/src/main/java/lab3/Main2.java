@@ -1,8 +1,6 @@
 package lab3;
 
-import gogui.GeoList;
-import gogui.Line;
-import gogui.Point;
+import gogui.*;
 import lab3.structures.LinePair;
 import lab3.structures.Q;
 import lab3.structures.T;
@@ -14,10 +12,10 @@ import static gogui.GoGui.*;
 public class Main2 {
 
     public static void main(String[] args) {
-        fireAlgorithm("input2");
+        Set<Point> intersectionPoints = fireAlgorithm("input3");
     }
 
-    private static void fireAlgorithm(String fileName) {
+    private static Set<Point> fireAlgorithm(String fileName) {
         GeoList<Line> lines = loadLinesFromJson(Main.LAB3_SRC_MAIN_RESOURCES + fileName + Main.INPUT_FILE_EXTENSION);
         GeoList<Point> points = new GeoList<>();
         GeoList<Line> helper = new GeoList<>();
@@ -39,6 +37,7 @@ public class Main2 {
         while (q.hasNext()) {
             Point p = q.next();
             broomstick = getNextBroomstick(helper, broomstick, p.x);
+            snapshot();
 
             if (q.isIntersectionPoint(p)) {
 
@@ -63,6 +62,7 @@ public class Main2 {
                     findIntersectionsWithNeighbouringLines(currentLine, q, t);
 
                 } else { // right end of segment
+                    t.remove(currentLine);
                     Optional<Line> leftNeighbor = t.getRightNeighbor(currentLine);
                     Optional<Line> rightNeighbor = t.getLeftNeighbor(currentLine);
 
@@ -72,16 +72,20 @@ public class Main2 {
 
                         processNeighboringLine(q, left, right, t);
                     }
-                    t.remove(currentLine);
-
+                    currentLine.processed();
                 }
-                currentLine.processed();
-//            snapshot();
-                helper.clear();
             }
+            helper.clear();
         }
 
+        lines.setStatus(GeoObject.Status.Processed);
+        helper.clear();
+        snapshot();
+
         saveJSON("C:\\home\\aaaaStudia\\Semestr_VII\\Geometria\\gogui\\visualization-grunt\\public\\data\\sweep." + fileName + ".data.json");
+        GoGui.saveJSON("lab3\\src\\main\\resources\\sweep." + fileName + ".data.json");
+
+        return q.getIntersectionPoints();
     }
 
     private static void findIntersectionsWithNeighbouringLines(Line currentLine, Q q, T t) {
@@ -135,15 +139,12 @@ public class Main2 {
 
         if (l1.containsPoint(intersection) && l2.containsPoint(intersection)) {
             System.out.println("Lines : " + l1 + " and " + l2 + " intersects at: " + intersection);
-//            intersectionPoints.push_back(intersection);
             if (!q.isIntersectionPoint(intersection)) {
                 q.addPoint(intersection);
                 q.addIntersectionPoint(intersection);
                 t.addIntersectionLines(intersection, l1, l2);
             }
             snapshot();
-        } else {
-            System.out.println("Intersection is null : ");
         }
     }
 }
