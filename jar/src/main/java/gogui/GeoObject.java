@@ -5,11 +5,21 @@ public abstract class GeoObject {
     private Status status = Status.Normal;
 
     public enum Status {
-        Normal, Active, Processed;
+        Normal("black"), Active("red"), Processed("green");
+
+        private String color;
+
+        Status(String black) {
+            color = black;
+        }
 
         @Override
         public String toString() {
             return this.name().toLowerCase();
+        }
+
+        public String getColor() {
+            return color;
         }
     }
 

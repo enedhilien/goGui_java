@@ -1,19 +1,23 @@
 package gogui;
 
-import gogui.history.History;
 import gogui.history.State;
 
 import javax.json.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import static gogui.GeoObject.*;
+import static gogui.GeoObject.Status;
 
 public class JsonPrinter {
 
     private TreeSet<Point> points = new TreeSet<>();
     private TreeSet<InternalLine> lines = new TreeSet<>();
     private List<State> states;
+
+    private static Version version = Version.ZMUDA;
 
     public JsonPrinter(List<State> states) {
         this.states = states;
@@ -119,16 +123,26 @@ public class JsonPrinter {
         for (Map.Entry<Point, Status> pointStatusEntry : displayPoints.entrySet()) {
             Point point = pointStatusEntry.getKey();
             int pointId = getPointID(point);
-            JsonObject jsonPoint = Json.createObjectBuilder().add("pointID", pointId).add("style", pointStatusEntry.getValue().toString()).build();
-            pointsArray.add(jsonPoint);
+            JsonObjectBuilder jsonPointBuilder = Json.createObjectBuilder().add("pointID", pointId);
+            if ( Version.SLONKA.equals(version)) {
+                jsonPointBuilder.add("style", pointStatusEntry.getValue().toString());
+            } else if ( Version.ZMUDA.equals(version)) {
+                jsonPointBuilder.add("color", pointStatusEntry.getValue().getColor());
+            }
+            pointsArray.add(jsonPointBuilder.build());
         }
 
         JsonArrayBuilder linesArray = Json.createArrayBuilder();
 
         for (Line line : state.getLines()) {
             int lineID = getLineID(line);
-            JsonObject jsonLine = Json.createObjectBuilder().add("lineID", lineID).add("style", line.getStatus().toString()).build();
-            linesArray.add(jsonLine);
+            JsonObjectBuilder jsonLineBuilder = Json.createObjectBuilder().add("lineID", lineID);
+            if ( Version.SLONKA.equals(version)) {
+                jsonLineBuilder.add("style", line.getStatus().toString());
+            } else if ( Version.ZMUDA.equals(version)) {
+                jsonLineBuilder.add("color", line.getStatus().getColor());
+            }
+            linesArray.add(jsonLineBuilder.build());
         }
 
         return Json.createObjectBuilder().add("lines", linesArray).add("points", pointsArray).build();
