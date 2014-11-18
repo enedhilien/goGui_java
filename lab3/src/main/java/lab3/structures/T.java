@@ -1,19 +1,20 @@
 package lab3.structures;
 
 import gogui.Line;
+import gogui.Point;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class T {
 
     private List<Line> activeLines = new ArrayList<>();
+    private Map<Point, LinePair> intersectionsLines = new HashMap<>();
+
 
     public void add(Line lineToInsert, double broomX) {
         if (activeLines.isEmpty()) {
             activeLines.add(lineToInsert);
+            return;
         }
 
         Comparator<Line> lineComparator = (l1, l2) -> {
@@ -29,7 +30,8 @@ public class T {
 
             Line activeLine = activeLines.get(i);
 
-            if ( activeLine.getY(broomX) < lineToInsert.getY(broomX) ) {
+            if (activeLine.getY(broomX) < lineToInsert.getY(broomX)) {
+//            if (lineComparator.compare(lineToInsert, activeLine) >= 0) {
                 indexToInsert = i;
                 break;
             }
@@ -60,5 +62,32 @@ public class T {
 
     public void remove(Line finishedLine) {
         activeLines.remove(finishedLine);
+    }
+
+    public void addIntersectionLines(Point intersectionLine, Line l1, Line l2) {
+        intersectionsLines.put(intersectionLine, new LinePair(l1, l2));
+    }
+
+
+    public void swapIntersectionLines(Point p) {
+        if (intersectionsLines.containsKey(p)) {
+            LinePair intersectionLines = intersectionsLines.get(p);
+
+            int index1 = activeLines.indexOf(intersectionLines.l1);
+            int index2 = activeLines.indexOf(intersectionLines.l2);
+
+            Collections.swap(activeLines, index1, index2);
+        } else {
+            throw new IllegalArgumentException("No lines intersection at Point: " + p);
+        }
+    }
+
+
+    public LinePair getIntersectionLines(Point p) {
+        if (intersectionsLines.containsKey(p)) {
+            return intersectionsLines.get(p);
+        } else {
+            throw new IllegalArgumentException("No lines intersection at Point: " + p);
+        }
     }
 }

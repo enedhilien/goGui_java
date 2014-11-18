@@ -3,6 +3,7 @@ package lab3;
 import gogui.GeoList;
 import gogui.Line;
 import gogui.Point;
+import lab3.structures.LinePair;
 import lab3.structures.Q;
 import lab3.structures.T;
 
@@ -13,16 +14,13 @@ import static gogui.GoGui.*;
 public class Main2 {
 
     public static void main(String[] args) {
-        fireAlgorithm("input");
+        fireAlgorithm("input2");
     }
 
     private static void fireAlgorithm(String fileName) {
         GeoList<Line> lines = loadLinesFromJson(Main.LAB3_SRC_MAIN_RESOURCES + fileName + Main.INPUT_FILE_EXTENSION);
         GeoList<Point> points = new GeoList<>();
         GeoList<Line> helper = new GeoList<>();
-
-//        GeoList<Point> intersectionPoints = new GeoList<>();
-//        Map<Point, LinePair> intersectionLines = new HashMap<>();
 
         Map<Point, Line> pointToLine = new HashMap<>();
 
@@ -37,87 +35,77 @@ public class Main2 {
         T t = new T();
         snapshot();
 
-//        GeoList<Line> T = new GeoList<>(false);
-
         Line broomstick = null;
         while (q.hasNext()) {
             Point p = q.next();
-            broomstick = getBroomstick(helper, broomstick, p.x);
+            broomstick = getNextBroomstick(helper, broomstick, p.x);
 
-            pointToLine.get(p).activate();
-            snapshot();
+            if (q.isIntersectionPoint(p)) {
 
-            Line currentLine = pointToLine.get(p);
+                t.swapIntersectionLines(p);
+                LinePair intersectionLines = t.getIntersectionLines(p);
 
-            Point lineSecondPoint = getAnotherEnd(p, currentLine);
+                Line l1 = intersectionLines.l1;
+                Line l2 = intersectionLines.l2;
 
-            //            if (q.isIntersectionPoint(p)) {
-//                LinePair linePair = intersectionLines.get(p);
-//                changedLines.add(linePair);
-//                swapRequiredLines(T, changedLines);
-//
-//                Line leftNeighbor = getRightNeighbor(linePair.l1, T);
-//                Line rightNeighbor = getLeftNeighbor(linePair.l1, T);
-//
-//                findIntersection(linePair.l1, leftNeighbor, intersectionPoints, intersectionLines, q);
-//                findIntersection(linePair.l1, rightNeighbor, intersectionPoints, intersectionLines, q);
-//
-//                leftNeighbor = getRightNeighbor(linePair.l2, T);
-//                rightNeighbor = getLeftNeighbor(linePair.l2, T);
-//                findIntersection(linePair.l2, leftNeighbor, intersectionPoints, intersectionLines, q);
-//                findIntersection(linePair.l2, rightNeighbor, intersectionPoints, intersectionLines, q);
-//            }
+                findIntersectionsWithNeighbouringLines(l1, q, t);
+                findIntersectionsWithNeighbouringLines(l2, q, t);
 
-            if (p.x < lineSecondPoint.x) {
-                t.add(currentLine, p.x);
-//                T.push_back(currentLine);
-//                Collections.sort(T, lineComparator);
-//                swapRequiredLines(T, changedLines);
+            } else {
+                pointToLine.get(p).activate();
+                Line currentLine = pointToLine.get(p);
 
-                Optional<Line> leftNeighbor = t.getRightNeighbor(currentLine);
+                Point lineSecondPoint = getAnotherEnd(p, currentLine);
 
-                if (leftNeighbor.isPresent()) {
-                    Line line = leftNeighbor.get();
+                if (p.x < lineSecondPoint.x) {
+                    t.add(currentLine, p.x);
 
-                    processNeighboringLine(q, currentLine, line);
+                    findIntersectionsWithNeighbouringLines(currentLine, q, t);
+
+                } else { // right end of segment
+                    Optional<Line> leftNeighbor = t.getRightNeighbor(currentLine);
+                    Optional<Line> rightNeighbor = t.getLeftNeighbor(currentLine);
+
+                    if (leftNeighbor.isPresent() && rightNeighbor.isPresent()) {
+                        Line left = leftNeighbor.get();
+                        Line right = rightNeighbor.get();
+
+                        processNeighboringLine(q, left, right, t);
+                    }
+                    t.remove(currentLine);
+
                 }
-
-                Optional<Line> rightNeighbor = t.getLeftNeighbor(currentLine);
-
-                if (rightNeighbor.isPresent()) {
-                    Line line = rightNeighbor.get();
-
-                    processNeighboringLine(q, currentLine, line);
-                }
-            } else { // right end of segment
-
-                Optional<Line> leftNeighbor = t.getRightNeighbor(currentLine);
-                Optional<Line> rightNeighbor = t.getLeftNeighbor(currentLine);
-
-                if (leftNeighbor.isPresent() && rightNeighbor.isPresent()) {
-                    Line left = leftNeighbor.get();
-                    Line right = rightNeighbor.get();
-
-                    processNeighboringLine(q, left, right);
-
-//                    left.activate();
-//                    snapshot();
-//                    findIntersection(left, right, q);
-                }
-                t.remove(currentLine);
+                currentLine.processed();
+//            snapshot();
+                helper.clear();
             }
-            currentLine.processed();
-            snapshot();
-            helper.clear();
         }
 
         saveJSON("C:\\home\\aaaaStudia\\Semestr_VII\\Geometria\\gogui\\visualization-grunt\\public\\data\\sweep." + fileName + ".data.json");
     }
 
-    private static void processNeighboringLine(Q q, Line currentLine, Line line) {
+    private static void findIntersectionsWithNeighbouringLines(Line currentLine, Q q, T t) {
+        Optional<Line> rightNeighbor = t.getRightNeighbor(currentLine);
+
+        if (rightNeighbor.isPresent()) {
+            Line line = rightNeighbor.get();
+
+            processNeighboringLine(q, currentLine, line, t);
+        }
+
+        Optional<Line> leftNeighbor = t.getLeftNeighbor(currentLine);
+
+        if (leftNeighbor.isPresent()) {
+            Line line = leftNeighbor.get();
+
+            processNeighboringLine(q, currentLine, line, t);
+        }
+    }
+
+    private static void processNeighboringLine(Q q, Line currentLine, Line line, T t) {
         line.activate();
         snapshot();
-        findIntersection(currentLine, line, q);
+        findIntersection(currentLine, line, q, t);
     }
 
     private static Point getAnotherEnd(Point knownPoint, Line line) {
@@ -130,7 +118,7 @@ public class Main2 {
         return other;
     }
 
-    private static Line getBroomstick(GeoList<Line> helper, Line broomstick, double x) {
+    private static Line getNextBroomstick(GeoList<Line> helper, Line broomstick, double x) {
         if (broomstick == null) {
             broomstick = new Line(new Point(x, 0.0), new Point(x, 1000.0));
         } else {
@@ -142,14 +130,17 @@ public class Main2 {
         return broomstick;
     }
 
-    private static void findIntersection(Line l1, Line l2, Q q) {
+    private static void findIntersection(Line l1, Line l2, Q q, T t) {
         Point intersection = l1.intersectionPoint(l2);
 
         if (l1.containsPoint(intersection) && l2.containsPoint(intersection)) {
             System.out.println("Lines : " + l1 + " and " + l2 + " intersects at: " + intersection);
 //            intersectionPoints.push_back(intersection);
-//            q.addPoint(intersection);
-            q.addIntersectionPoint(intersection);
+            if (!q.isIntersectionPoint(intersection)) {
+                q.addPoint(intersection);
+                q.addIntersectionPoint(intersection);
+                t.addIntersectionLines(intersection, l1, l2);
+            }
             snapshot();
         } else {
             System.out.println("Intersection is null : ");

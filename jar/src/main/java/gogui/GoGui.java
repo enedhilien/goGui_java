@@ -57,7 +57,7 @@ public class GoGui {
                 int point2X = Integer.parseInt(point2.get("x").toString());
                 int point2Y = Integer.parseInt(point2.get("y").toString());
 
-                Line line = new Line(new Point(point1X, point1Y), new Point(point2X, point2Y));
+                Line line = new Line(new Point(point1X, point1Y), new Point(point2X, point2Y), true);
                 lines.push_back(line);
             }
 

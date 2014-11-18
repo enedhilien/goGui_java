@@ -15,6 +15,17 @@ public class Line extends GeoObject {
         parameters = new Parameters(getA(), getB(), getC());
     }
 
+    public Line(Point point1, Point point2, boolean fromLeft) {
+        if (point1.x < point2.x) {
+            this.point1 = point1;
+            this.point2 = point2;
+        } else {
+            this.point1 = point2;
+            this.point2 = point1;
+        }
+        parameters = new Parameters(getA(), getB(), getC());
+    }
+
     public static Line from(Line line) {
 
         Line newLine = new Line(Point.from(line.point1), Point.from(line.point2));
@@ -219,8 +230,8 @@ public class Line extends GeoObject {
     @Override
     public String toString() {
         return "Line{" +
-                "point1=" + point1 +
-                ", point2=" + point2 +
+                "p1=" + point1 +
+                ", p2=" + point2 +
                 '}';
     }
 
