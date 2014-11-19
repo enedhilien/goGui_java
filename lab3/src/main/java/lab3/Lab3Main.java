@@ -9,7 +9,7 @@ import java.util.*;
 
 import static gogui.GoGui.*;
 
-public class Main2 {
+public class Lab3Main {
 
     public static final String LAB3_SRC_MAIN_RESOURCES = "lab3\\src\\main\\resources\\";
     public static final String INPUT_FILE_EXTENSION = ".json";

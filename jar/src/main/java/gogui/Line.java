@@ -183,31 +183,6 @@ public class Line extends GeoObject {
         return p;
     }
 
-    public Point intersectionPoint2(Line line) {
-        //Ax+By+C=0
-        // y = -A/Bx -C/B
-
-        // y = ax + c
-        // y = bx + d
-
-        double a = get_a();
-        double c = get_b();
-
-        double b = line.get_a();
-        double d = line.get_b();
-
-        Point intersectionPoint = new Point();
-        intersectionPoint.x = ((d - c) / (a - b));
-        intersectionPoint.y = ((a * d - b * c) / (a - b));
-
-        if (pointInXRange(intersectionPoint, this.getLeftPoint().x, this.getRightPoint().x) &&
-                pointInXRange(intersectionPoint, line.getLeftPoint().x, line.getRightPoint().x)) {
-            return intersectionPoint;
-        }
-
-        return null;
-    }
-
     private boolean pointInXRange(Point p, double leftX, double rightX) {
         return p.x >= leftX && p.x <= rightX;
     }

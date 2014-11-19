@@ -37,6 +37,10 @@ public class GeoList<T extends GeoObject> extends ArrayList<T> {
         return this.get(this.size() - 1);
     }
 
+    public T front() {
+        return !this.isEmpty() ? this.get(0) : null;
+    }
+
     public void setStatus(GeoObject.Status status) {
         forEach(x -> x.setStatus(status));
     }
