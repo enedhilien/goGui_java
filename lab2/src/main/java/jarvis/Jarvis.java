@@ -17,7 +17,7 @@ public class Jarvis {
         snapshot();
 
         GeoList<Point> convexHull = findConvexHullWithJarvis(pointGeoList);
-        convexHull.setStatus(GeoObject.Status.Active);
+        convexHull.setStatus(GeoObject.Status.ACTIVE);
 
         GoGui.saveJSON("C:\\home\\aaaaStudia\\Semestr_VII\\Geometria\\gogui\\visualization-grunt\\public\\data\\jarvis.data.json");
         GoGui.saveJSON("lab2\\src\\main\\resources\\jarvis.data.json");

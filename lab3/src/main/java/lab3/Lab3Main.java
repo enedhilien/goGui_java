@@ -82,7 +82,7 @@ public class Lab3Main {
             helper.clear();
         }
 
-        lines.setStatus(GeoObject.Status.Processed);
+        lines.setStatus(GeoObject.Status.PROCESSED);
         helper.clear();
         snapshot();
 
