@@ -7,11 +7,16 @@ Ważniejsze rzeczy:
 
 Nie ma na razie wszystkich generatorów punktów.
 
-Odkryłem dlaczego czasami nie chcą sie rysować linie, to znaczy odkryłem jak to naprawić a nie dlaczego tak się dzieje :P
 
-trzeba w visualization-grunt/public/js/scripts.js zamienić te dwie linijki:
 
-    ...
+Update note:
+* Dodano obsługę forków - ustawiana w JsonPrinter.
+
+UpdateNote:
+
+* Odkryłem dlaczego czasami nie chcą sie rysować linie, to znaczy odkryłem jak to naprawić a nie dlaczego tak się dzieje :P trzeba w visualization-grunt/public/js/scripts.js zamienić te dwie linijki( TYLKO W SLONKA VERSION):
+
+...
     // draw lines
 
     for( var i = 0; i < snapshotLines.length; ++i ) {
@@ -28,3 +33,6 @@ trzeba w visualization-grunt/public/js/scripts.js zamienić te dwie linijki:
 
 
 Jak będzie czas to dojdę dlaczego tak się dzieje.
+
+
+
