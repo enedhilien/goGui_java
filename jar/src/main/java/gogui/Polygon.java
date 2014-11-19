@@ -5,10 +5,8 @@ public class Polygon extends GeoObject {
     GeoList<Point> points;
     GeoList<Line> lines;
 
-
     public Polygon(GeoList<Point> points) {
-        this.points = new GeoList<>(points);
-
+        this.points = points;
         lines = joinedPolygonPoints();
     }
 
@@ -48,11 +46,17 @@ public class Polygon extends GeoObject {
         int pointIndex = points.indexOf(point);
         Point result;
 
-        if (pointIndex == points.size()) {
+        if (pointIndex == points.size() -1) {
             result = points.front();
         } else {
             result = points.get(pointIndex + 1);
         }
         return result;
+    }
+
+    @Override
+    public void setColor(String color) {
+        points.forEach(x -> x.setColor(color));
+        lines.forEach(x -> x.setColor(color));
     }
 }

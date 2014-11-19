@@ -2,7 +2,6 @@ package gogui.main;
 
 import gogui.*;
 import org.junit.Test;
-import org.skyscreamer.jsonassert.JSONAssert;
 
 public class MainTest {
 
@@ -31,7 +30,7 @@ public class MainTest {
         lines.push_back(line1);
         GoGui.snapshot();
 
-        line1.setStatus(GeoObject.Status.Active);
+        line1.setStatus(GeoObject.Status.ACTIVE);
         GoGui.snapshot();
 
         GoGui.getJSON();

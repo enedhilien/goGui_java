@@ -14,4 +14,14 @@ public class Commons {
         return compareDouble(a, b, EPSILON);
     }
 
+    // Converts degrees to radians.
+    public static double degreesToRadians(double angleDegrees) {
+        return angleDegrees * Commons.M_PI / 180.0;
+    }
+
+    // Converts radians to degrees.
+    public static double radiansToDegrees(double angleRadians) {
+        return angleRadians * 180.0 / Commons.M_PI;
+    }
+
 }

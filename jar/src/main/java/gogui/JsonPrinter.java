@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import static gogui.GeoObject.Status;
-
 public class JsonPrinter {
 
     private TreeSet<Point> points = new TreeSet<>();
@@ -110,24 +108,24 @@ public class JsonPrinter {
 
     private JsonObject getJsonState(State state) {
 
-        Map<Point, GeoObject.Status> displayPoints = new HashMap<>();
+        Map<Point, String> pointsColors = new HashMap<>();
         for (Point point : state.getPoints()) {
-            if (displayPoints.containsKey(point))
-                displayPoints.put(point, mergeStatus(displayPoints.get(point), point.getStatus()));
+            if (pointsColors.containsKey(point))
+                pointsColors.put(point, getFinalColor(point, pointsColors.get(point)));
             else
-                displayPoints.put(point, point.getStatus());
+                pointsColors.put(point, point.getColor());
         }
 
         JsonArrayBuilder pointsArray = Json.createArrayBuilder();
 
-        for (Map.Entry<Point, Status> pointStatusEntry : displayPoints.entrySet()) {
+        for (Map.Entry<Point, String> pointStatusEntry : pointsColors.entrySet()) {
             Point point = pointStatusEntry.getKey();
             int pointId = getPointID(point);
             JsonObjectBuilder jsonPointBuilder = Json.createObjectBuilder().add("pointID", pointId);
             if ( Version.SLONKA.equals(version)) {
-                jsonPointBuilder.add("style", pointStatusEntry.getValue().toString());
+                jsonPointBuilder.add("style", pointStatusEntry.toString());
             } else if ( Version.ZMUDA.equals(version)) {
-                jsonPointBuilder.add("color", pointStatusEntry.getValue().getColor());
+                jsonPointBuilder.add("color", pointStatusEntry.getKey().getColor());
             }
             pointsArray.add(jsonPointBuilder.build());
         }
@@ -140,7 +138,7 @@ public class JsonPrinter {
             if ( Version.SLONKA.equals(version)) {
                 jsonLineBuilder.add("style", line.getStatus().toString());
             } else if ( Version.ZMUDA.equals(version)) {
-                jsonLineBuilder.add("color", line.getStatus().getColor());
+                jsonLineBuilder.add("color", line.getColor());
             }
             linesArray.add(jsonLineBuilder.build());
         }
@@ -148,13 +146,12 @@ public class JsonPrinter {
         return Json.createObjectBuilder().add("lines", linesArray).add("points", pointsArray).build();
     }
 
-    private Status mergeStatus(Status s1, Status s2) {
-        if (s1 == Status.Active || s2 == Status.Active) {
-            return Status.Active;
-        } else if (s1 == Status.Normal || s2 == Status.Normal) {
-            return Status.Normal;
+    private String getFinalColor(Point p1, String p2) {
+        if ( p1.hasCustomColor()) {
+            return p1.getColor();
         }
-        return Status.Processed;
+
+        return p2;
     }
 
     int getLineID( InternalLine iline) {

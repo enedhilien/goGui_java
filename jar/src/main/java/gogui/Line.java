@@ -30,6 +30,9 @@ public class Line extends GeoObject {
 
         Line newLine = new Line(Point.from(line.point1), Point.from(line.point2));
         newLine.setStatus(line.getStatus());
+        if (line.hasCustomColor()) {
+            newLine.setColor(line.getColor());
+        }
         return newLine;
     }
 
@@ -174,9 +177,9 @@ public class Line extends GeoObject {
         double c = get_b();
 
         double b = line.get_a();
-        double d = line.get_b();
 
         Point p = new Point();
+        double d = line.get_b();
         p.x = ((d - c) / (a - b));
         p.y = ((a * d - b * c) / (a - b));
 
@@ -192,15 +195,6 @@ public class Line extends GeoObject {
         return -((getA() * x + getC()) / getB());
     }
 
-    // Converts degrees to radians.
-    public double degreesToRadians(double angleDegrees) {
-        return angleDegrees * Commons.M_PI / 180.0;
-    }
-
-    // Converts radians to degrees.
-    public double radiansToDegrees(double angleRadians) {
-        return angleRadians * 180.0 / Commons.M_PI;
-    }
 
     @Override
     public String toString() {

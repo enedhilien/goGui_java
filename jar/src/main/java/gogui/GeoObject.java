@@ -2,10 +2,11 @@ package gogui;
 
 public abstract class GeoObject {
 
-    private Status status = Status.Normal;
+    private Status status = Status.NORMAL;
+    private String color;
 
     public enum Status {
-        Normal("black"), Active("red"), Processed("green");
+        NORMAL("black"), ACTIVE("red"), PROCESSED("green");
 
         private String color;
 
@@ -21,27 +22,42 @@ public abstract class GeoObject {
         public String getColor() {
             return color;
         }
-    }
 
+    }
     public Status getStatus() {
         return status;
     }
 
     public void setStatus(Status s) {
         status = s;
+        color = null;
     }
 
     public void activate() {
-        status = Status.Active;
+        setStatus(Status.ACTIVE);
     }
 
     public void processed() {
-        status = Status.Processed;
+        setStatus(Status.PROCESSED);
     }
 
     public void normalize() {
-        status = Status.Normal;
+        setStatus(Status.NORMAL);
     }
 
+    public String getColor() {
+        if (hasCustomColor()) {
+            return color;
+        } else {
+            return status.getColor();
+        }
+    }
 
+    public boolean hasCustomColor() {
+        return color != null && !color.isEmpty();
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 }

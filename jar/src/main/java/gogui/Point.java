@@ -12,7 +12,9 @@ public class Point extends GeoObject implements Comparable {
     public static Point from(Point p) {
         Point newPoint = new Point(p.x, p.y);
         newPoint.setStatus(p.getStatus());
-
+        if (p.hasCustomColor()) {
+            newPoint.setColor(p.getColor());
+        }
         return newPoint;
     }
 
@@ -88,5 +90,9 @@ public class Point extends GeoObject implements Comparable {
     @Override
     public String toString() {
         return "Point{" + "x=" + x + ", y=" + y + '}';
+    }
+
+    public Point minus(Point relative) {
+        return new Point(this.x - relative.x, this.y - relative.y);
     }
 }

@@ -36,9 +36,8 @@ public class History {
                 .flatMap(geoList -> geoList.stream())
                 .collect(toList());
 
-        List<Point> newPointsList = pointsList.stream().map((Point p) -> Point.from(p)).collect(toList());
-        List<Line> newLinesList = linesList.stream().map((Line line) -> Line.from(line)).collect(toList());
-
+        List<Point> newPointsList = pointsList.stream().map(Point::from).collect(toList());
+        List<Line> newLinesList = linesList.stream().map(Line::from).collect(toList());
 
         states.add(states.size(), new State(new GeoList<>(newPointsList, false), new GeoList<>(newLinesList, false)));
     }
