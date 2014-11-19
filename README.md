@@ -17,8 +17,8 @@ UpdateNote:
 * Odkryłem dlaczego czasami nie chcą sie rysować linie, to znaczy odkryłem jak to naprawić a nie dlaczego tak się dzieje :P trzeba w visualization-grunt/public/js/scripts.js zamienić te dwie linijki( TYLKO W SLONKA VERSION):
 
 ...
-    // draw lines
 
+    // draw lines
     for( var i = 0; i < snapshotLines.length; ++i ) {
 	
         // stare linijki:
