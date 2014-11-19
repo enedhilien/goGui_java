@@ -11,13 +11,16 @@ import static gogui.GoGui.*;
 
 public class Main2 {
 
+    public static final String LAB3_SRC_MAIN_RESOURCES = "lab3\\src\\main\\resources\\";
+    public static final String INPUT_FILE_EXTENSION = ".json";
+
     public static void main(String[] args) {
         Set<Point> intersectionPoints = fireAlgorithm("input3");
         intersectionPoints.forEach(System.out::println);
     }
 
     private static Set<Point> fireAlgorithm(String fileName) {
-        GeoList<Line> lines = loadLinesFromJson(Main.LAB3_SRC_MAIN_RESOURCES + fileName + Main.INPUT_FILE_EXTENSION);
+        GeoList<Line> lines = loadLinesFromJson(LAB3_SRC_MAIN_RESOURCES + fileName + INPUT_FILE_EXTENSION);
         GeoList<Point> points = new GeoList<>();
         GeoList<Line> helper = new GeoList<>();
 

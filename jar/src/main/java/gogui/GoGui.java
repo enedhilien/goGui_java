@@ -10,6 +10,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class GoGui {
 
@@ -67,11 +68,44 @@ public class GoGui {
         return lines;
     }
 
+    public static GeoList<Point> loadPoints(String s) {
+        GeoList<Point> points = new GeoList<>();
+        JSONParser parser = new JSONParser();
+
+        try {
+            Object obj = parser.parse(new FileReader(s));
+
+            JSONArray allObjects = (JSONArray) obj;
+            Iterator<JSONObject> iterator = allObjects.iterator();
+            while (iterator.hasNext()) {
+                JSONObject next = iterator.next();
+                JSONArray pointsArray = (JSONArray) next.get("points");
+                Iterator<JSONObject> pointIterator = pointsArray.iterator();
+                JSONObject point1 = pointIterator.next();
+                JSONObject point2 = pointIterator.next();
+                int point1X = Integer.parseInt(point1.get("x").toString());
+                int point1Y = Integer.parseInt(point1.get("y").toString());
+                int point2X = Integer.parseInt(point2.get("x").toString());
+                int point2Y = Integer.parseInt(point2.get("y").toString());
+
+                if (!points.contains(new Point(point1X, point1Y))) {
+                    points.push_back(new Point(point1X, point1Y));
+                }
+
+                if (!points.contains(new Point(point2X, point2Y))) {
+                    points.push_back(new Point(point2X, point2Y));
+                }
+            }
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return points;
+    }
 
     public static void snapshot() {
         history.snapshot();
     }
-
 
     public static List<GeoList> getActiveLists() {
         return activeLists;

@@ -1,0 +1,254 @@
+[
+    {
+        "points": [
+            {
+                "x": 165,
+                "y": 107,
+                "state": "normal",
+                "pointID": 0
+            },
+            {
+                "x": 109,
+                "y": 150,
+                "state": "normal",
+                "pointID": 1
+            }
+        ],
+        "state": "normal",
+        "lineID": 0
+    },
+    {
+        "points": [
+            {
+                "x": 109,
+                "y": 150,
+                "state": "normal",
+                "pointID": 1
+            },
+            {
+                "x": 137,
+                "y": 176,
+                "state": "normal",
+                "pointID": 2
+            }
+        ],
+        "state": "normal",
+        "lineID": 1
+    },
+    {
+        "points": [
+            {
+                "x": 137,
+                "y": 176,
+                "state": "normal",
+                "pointID": 2
+            },
+            {
+                "x": 90,
+                "y": 189,
+                "state": "normal",
+                "pointID": 3
+            }
+        ],
+        "state": "normal",
+        "lineID": 2
+    },
+    {
+        "points": [
+            {
+                "x": 90,
+                "y": 189,
+                "state": "normal",
+                "pointID": 3
+            },
+            {
+                "x": 179,
+                "y": 226,
+                "state": "normal",
+                "pointID": 4
+            }
+        ],
+        "state": "normal",
+        "lineID": 3
+    },
+    {
+        "points": [
+            {
+                "x": 179,
+                "y": 226,
+                "state": "normal",
+                "pointID": 4
+            },
+            {
+                "x": 105,
+                "y": 272,
+                "state": "normal",
+                "pointID": 5
+            }
+        ],
+        "state": "normal",
+        "lineID": 4
+    },
+    {
+        "points": [
+            {
+                "x": 105,
+                "y": 272,
+                "state": "normal",
+                "pointID": 5
+            },
+            {
+                "x": 135,
+                "y": 302,
+                "state": "normal",
+                "pointID": 6
+            }
+        ],
+        "state": "normal",
+        "lineID": 5
+    },
+    {
+        "points": [
+            {
+                "x": 135,
+                "y": 302,
+                "state": "normal",
+                "pointID": 6
+            },
+            {
+                "x": 74,
+                "y": 329,
+                "state": "normal",
+                "pointID": 7
+            }
+        ],
+        "state": "normal",
+        "lineID": 6
+    },
+    {
+        "points": [
+            {
+                "x": 74,
+                "y": 329,
+                "state": "normal",
+                "pointID": 7
+            },
+            {
+                "x": 180,
+                "y": 386,
+                "state": "normal",
+                "pointID": 8
+            }
+        ],
+        "state": "normal",
+        "lineID": 7
+    },
+    {
+        "points": [
+            {
+                "x": 180,
+                "y": 386,
+                "state": "normal",
+                "pointID": 8
+            },
+            {
+                "x": 206,
+                "y": 303,
+                "state": "normal",
+                "pointID": 9
+            }
+        ],
+        "state": "normal",
+        "lineID": 8
+    },
+    {
+        "points": [
+            {
+                "x": 206,
+                "y": 303,
+                "state": "normal",
+                "pointID": 9
+            },
+            {
+                "x": 181,
+                "y": 273,
+                "state": "normal",
+                "pointID": 10
+            }
+        ],
+        "state": "normal",
+        "lineID": 9
+    },
+    {
+        "points": [
+            {
+                "x": 181,
+                "y": 273,
+                "state": "normal",
+                "pointID": 10
+            },
+            {
+                "x": 276,
+                "y": 257,
+                "state": "normal",
+                "pointID": 11
+            }
+        ],
+        "state": "normal",
+        "lineID": 10
+    },
+    {
+        "points": [
+            {
+                "x": 276,
+                "y": 257,
+                "state": "normal",
+                "pointID": 11
+            },
+            {
+                "x": 276,
+                "y": 196,
+                "state": "normal",
+                "pointID": 12
+            }
+        ],
+        "state": "normal",
+        "lineID": 11
+    },
+    {
+        "points": [
+            {
+                "x": 276,
+                "y": 196,
+                "state": "normal",
+                "pointID": 12
+            },
+            {
+                "x": 157,
+                "y": 146,
+                "state": "normal",
+                "pointID": 13
+            }
+        ],
+        "state": "normal",
+        "lineID": 12
+    },
+    {
+        "points": [
+            {
+                "x": 157,
+                "y": 146,
+                "state": "normal",
+                "pointID": 13
+            },
+            {
+                "x": 165,
+                "y": 107,
+                "state": "normal",
+                "pointID": 0
+            }
+        ],
+        "state": "normal",
+        "lineID": 13
+    }
+]
