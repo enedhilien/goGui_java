@@ -13,6 +13,7 @@ public class Main2 {
 
     public static void main(String[] args) {
         Set<Point> intersectionPoints = fireAlgorithm("input3");
+        intersectionPoints.forEach(System.out::println);
     }
 
     private static Set<Point> fireAlgorithm(String fileName) {
@@ -140,7 +141,7 @@ public class Main2 {
         if (l1.containsPoint(intersection) && l2.containsPoint(intersection)) {
             System.out.println("Lines : " + l1 + " and " + l2 + " intersects at: " + intersection);
             if (!q.isIntersectionPoint(intersection)) {
-                q.addPoint(intersection);
+//                q.addPoint(intersection);
                 q.addIntersectionPoint(intersection);
                 t.addIntersectionLines(intersection, l1, l2);
             }

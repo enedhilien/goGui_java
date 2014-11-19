@@ -48,8 +48,10 @@ public class Q {
 //        Collections.sort(points);
     }
 
-    public void addIntersectionPoint(Point intersectionLine) {
-        intersectionPoints.add(intersectionLine);
+    public void addIntersectionPoint(Point intersectionPoint) {
+        intersectionPoint.activate();
+        addPoint(intersectionPoint);
+        intersectionPoints.add(intersectionPoint);
     }
 
     public boolean isIntersectionPoint(Point p) {
