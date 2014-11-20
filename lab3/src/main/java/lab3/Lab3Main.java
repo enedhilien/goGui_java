@@ -88,6 +88,7 @@ public class Lab3Main {
 
         saveJSON("C:\\home\\aaaaStudia\\Semestr_VII\\Geometria\\gogui\\visualization-grunt\\public\\data\\sweep." + fileName + ".data.json");
         GoGui.saveJSON("lab3\\src\\main\\resources\\sweep." + fileName + ".data.json");
+        saveJSON("results\\sweep." + fileName + ".data.json");
 
         return q.getIntersectionPoints();
     }

@@ -4,14 +4,17 @@ import gogui.*;
 import gogui.random.PointsGenerator;
 import gogui.random.strategy.OuterRectangleGenerator;
 
+import java.util.Arrays;
 import java.util.List;
 
+import static gogui.GoGui.saveJSON;
 import static gogui.GoGui.snapshot;
 
 public class Jarvis {
 
     public static void main(String[] args) {
         List<Point> points = PointsGenerator.generate(100, OuterRectangleGenerator.onRectangle(new Point(-10, 10), new Point(10, 10), new Point(10, -10), new Point(-10, -10)));
+//        List<Point> points  = Arrays.asList(new Point(-15,-10), new Point(10,5),new Point(16,-20),new Point(0,10));
 //        List<Point> points = PointsGenerator.generate(10, InnerRectangleGenerator.withinRectangle(-10, 10, -10, 10));
         GeoList<Point> pointGeoList = new GeoList<>(points);
         snapshot();
@@ -21,6 +24,7 @@ public class Jarvis {
 
         GoGui.saveJSON("C:\\home\\aaaaStudia\\Semestr_VII\\Geometria\\gogui\\visualization-grunt\\public\\data\\jarvis.data.json");
         GoGui.saveJSON("lab2\\src\\main\\resources\\jarvis.data.json");
+        saveJSON("results\\jarvis.data.json");
     }
 
     static GeoList<Point> findConvexHullWithJarvis(GeoList<Point> points) {
