@@ -59,4 +59,8 @@ public class Polygon extends GeoObject {
         points.forEach(x -> x.setColor(color));
         lines.forEach(x -> x.setColor(color));
     }
+
+    public GeoList<Line> getLines() {
+        return lines;
+    }
 }

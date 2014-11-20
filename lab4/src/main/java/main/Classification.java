@@ -11,17 +11,13 @@ import static gogui.GeoObject.Status;
 import static gogui.GoGui.saveJSON;
 import static gogui.GoGui.snapshot;
 
-public class Main {
-
-    public static final String LAB4_SRC_MAIN_RESOURCES = "lab4\\src\\main\\resources\\";
-    public static final String INPUT_FILE_EXTENSION = ".json";
-
+public class Classification {
 
     public static void main(String[] args) {
 
         String fileName = "input3";
 
-        GeoList<Point> polygonPoints = GoGui.loadPoints(LAB4_SRC_MAIN_RESOURCES + fileName + INPUT_FILE_EXTENSION);
+        GeoList<Point> polygonPoints = GoGui.loadPoints(Triangulation.LAB4_SRC_MAIN_RESOURCES + fileName + Triangulation.INPUT_FILE_EXTENSION);
         Polygon polygon = new Polygon(polygonPoints);
         GoGui.snapshot();
 
@@ -32,8 +28,9 @@ public class Main {
         colorPoints(pointPointClassificationMap);
         snapshot();
 
-        saveJSON("C:\\home\\aaaaStudia\\Semestr_VII\\Geometria\\gogui\\visualization-grunt\\public\\data\\triangulation." + fileName + ".data.json");
-        GoGui.saveJSON("lab4\\src\\main\\resources\\triangulation." + fileName + ".data.json");
+        saveJSON("C:\\home\\aaaaStudia\\Semestr_VII\\Geometria\\gogui\\visualization-grunt\\public\\data\\classification." + fileName + ".data.json");
+        saveJSON("lab4\\src\\main\\resources\\classification." + fileName + ".data.json");
+        saveJSON("results\\classification." + fileName + ".data.json");
     }
 
     private static GeoList<Point> colorPoints(Map<Point, PointClassification> pointPointClassificationMap) {

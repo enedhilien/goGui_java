@@ -45,4 +45,8 @@ public class GeoList<T extends GeoObject> extends ArrayList<T> {
         forEach(x -> x.setStatus(status));
     }
 
+    public void setColor(String color) {
+        forEach(x -> x.setColor(color));
+    }
+
 }
