@@ -1,9 +1,8 @@
 package jarvis;
 
 import gogui.*;
-import gogui.random.PointsGenerator;
-import gogui.random.strategy.InnerRectangleGenerator;
 import gogui.random.strategy.OuterRectangleGenerator;
+import gogui.random.strategy.PointGeneratorStrategy;
 
 import java.util.List;
 
@@ -13,7 +12,9 @@ import static gogui.GoGui.snapshot;
 public class Jarvis {
 
     public static void main(String[] args) {
-        List<Point> points = PointsGenerator.generate(100, OuterRectangleGenerator.onRectangle(new Point(-10, 10), new Point(10, 10), new Point(10, -10), new Point(-10, -10)));
+        PointGeneratorStrategy strategy = OuterRectangleGenerator.onRectangle(new Point(-10, 10), new Point(10, 10), new Point(10, -10), new Point(-10, -10));
+//        PointGeneratorStrategy strategy = SquareWithDiagonal.byPoints(new Point(0, 0), new Point(10, 10));
+        List<Point> points = strategy.generate(100);
 
 //        List<Point> points  = Arrays.asList(new Point(-15,-10), new Point(10,5),new Point(16,-20),new Point(0,10));
 //        List<Point> points = PointsGenerator.generate(10, InnerRectangleGenerator.withinRectangle(-10, 10, -10, 10));
