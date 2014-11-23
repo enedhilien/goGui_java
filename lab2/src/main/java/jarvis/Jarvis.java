@@ -2,9 +2,9 @@ package jarvis;
 
 import gogui.*;
 import gogui.random.PointsGenerator;
+import gogui.random.strategy.InnerRectangleGenerator;
 import gogui.random.strategy.OuterRectangleGenerator;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static gogui.GoGui.saveJSON;
@@ -14,6 +14,7 @@ public class Jarvis {
 
     public static void main(String[] args) {
         List<Point> points = PointsGenerator.generate(100, OuterRectangleGenerator.onRectangle(new Point(-10, 10), new Point(10, 10), new Point(10, -10), new Point(-10, -10)));
+
 //        List<Point> points  = Arrays.asList(new Point(-15,-10), new Point(10,5),new Point(16,-20),new Point(0,10));
 //        List<Point> points = PointsGenerator.generate(10, InnerRectangleGenerator.withinRectangle(-10, 10, -10, 10));
         GeoList<Point> pointGeoList = new GeoList<>(points);
@@ -31,7 +32,6 @@ public class Jarvis {
         Point first = getStartingPoint(points);
         first.activate();
         snapshot();
-
 
         GeoList<Point> convexHull = new GeoList<>();
         GeoList<Line> lines = new GeoList<>();
@@ -62,26 +62,13 @@ public class Jarvis {
         return points.get(currentStartingIndex);
     }
 
-    static double det(Point x, Point y, Point z) {
-        return (x.x - z.x) * (y.y - z.y) - (x.y - z.y) * (y.x - z.x);
-    }
-
-    static double dist2(Point a, Point b) {
-        return (b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y);
-    }
-
-    static boolean isBetterThanCurrentCandidate(Point asked, Point currentCandidate, Point lastConvexPoint) {
-        double det_value = det(lastConvexPoint, currentCandidate, asked);
-        return det_value > 0 || (det_value == 0.0 && dist2(lastConvexPoint, asked) > dist2(lastConvexPoint, currentCandidate));
-    }
-
     static Point getNextHullPoint(GeoList<Point> points, Point lastHullPoint) {
         Point currentCandidate = points.get(0);
 
         for (int i = 1; i < points.size(); ++i) {
-            Point point = points.get(i);
-            if (isBetterThanCurrentCandidate(point, currentCandidate, lastHullPoint)) {
-                currentCandidate = point;
+            Point nextCandidate = points.get(i);
+            if (isBetterThanCurrentCandidate(nextCandidate, currentCandidate, lastHullPoint)) {
+                currentCandidate = nextCandidate;
             }
         }
         currentCandidate.activate();
@@ -89,8 +76,13 @@ public class Jarvis {
         return currentCandidate;
     }
 
+    static boolean isBetterThanCurrentCandidate(Point asked, Point currentCandidate, Point lastConvexPoint) {
+        double det_value = det(lastConvexPoint, currentCandidate, asked);
+        return det_value < 0 || (det_value == 0.0 && lastConvexPoint.distance(asked)> lastConvexPoint.distance(currentCandidate));
+    }
 
-
-
+    static double det(Point x, Point y, Point z) {
+        return (x.x - z.x) * (y.y - z.y) - (x.y - z.y) * (y.x - z.x);
+    }
 
 }

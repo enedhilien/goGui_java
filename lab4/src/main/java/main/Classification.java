@@ -1,6 +1,7 @@
 package main;
 
 import gogui.*;
+import main.helpers.PointClassification;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,8 +16,13 @@ public class Classification {
 
     public static void main(String[] args) {
 
-        String fileName = "input3";
+        fireAlgorithm("input");
+        fireAlgorithm("input2");
+        fireAlgorithm("input3");
+        fireAlgorithm("input4");
+    }
 
+    private static void fireAlgorithm(String fileName) {
         GeoList<Point> polygonPoints = GoGui.loadPoints(Triangulation.LAB4_SRC_MAIN_RESOURCES + fileName + Triangulation.INPUT_FILE_EXTENSION);
         Polygon polygon = new Polygon(polygonPoints);
         GoGui.snapshot();
@@ -31,6 +37,7 @@ public class Classification {
         saveJSON("C:\\home\\aaaaStudia\\Semestr_VII\\Geometria\\gogui\\visualization-grunt\\public\\data\\classification." + fileName + ".data.json");
         saveJSON("lab4\\src\\main\\resources\\classification." + fileName + ".data.json");
         saveJSON("results\\classification." + fileName + ".data.json");
+        GoGui.clear();
     }
 
     private static GeoList<Point> colorPoints(Map<Point, PointClassification> pointPointClassificationMap) {

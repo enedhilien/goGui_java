@@ -33,7 +33,7 @@ public class Point extends GeoObject implements Comparable {
         return y < that.y;
     }
 
-    double distance(Point p) {
+    public double distance(Point p) {
         return Math.sqrt((x - p.x) * (x - p.x) + (y - p.y) * (y - p.y));
     }
 

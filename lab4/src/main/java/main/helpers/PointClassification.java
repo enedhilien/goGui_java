@@ -1,4 +1,4 @@
-package main;
+package main.helpers;
 
 public enum PointClassification {
     START("green"), END("red"), MERGE("blue"), SPLIT("yellow"), REGULAR("brown");

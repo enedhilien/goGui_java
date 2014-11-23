@@ -10,5 +10,10 @@ public class LinePair {
         this.l1 = l1;
         this.l2 = l2;
     }
+
+    @Override
+    public String toString() {
+        return "LinePair{" + "l1=" + l1 + ", l2=" + l2 + '}';
+    }
 }
 

@@ -15,8 +15,15 @@ public class Lab3Main {
     public static final String INPUT_FILE_EXTENSION = ".json";
 
     public static void main(String[] args) {
-        Set<Point> intersectionPoints = fireAlgorithm("input3");
-        intersectionPoints.forEach(System.out::println);
+        Set<Point> intersectionPoints = fireAlgorithm("input");
+        GoGui.clear();
+        Set<Point> intersectionPoints2 = fireAlgorithm("input2");
+        GoGui.clear();
+        Set<Point> intersectionPoints3 = fireAlgorithm("input3");
+        GoGui.clear();
+        Set<Point> intersectionPoints4 = fireAlgorithm("input4");
+        GoGui.clear();
+//        intersectionPoints.forEach(System.out::println);
     }
 
     private static Set<Point> fireAlgorithm(String fileName) {
@@ -90,6 +97,12 @@ public class Lab3Main {
         GoGui.saveJSON("lab3\\src\\main\\resources\\sweep." + fileName + ".data.json");
         saveJSON("results\\sweep." + fileName + ".data.json");
 
+        System.out.println("Number of intersections: " + q.getIntersectionPoints().size());
+        q.getIntersectionPoints().forEach(intersection -> {
+            System.out.println(intersection);
+            System.out.println(t.getIntersectionLines(intersection));
+        });
+
         return q.getIntersectionPoints();
     }
 
@@ -143,9 +156,8 @@ public class Lab3Main {
         Point intersection = l1.intersectionPoint(l2);
 
         if (l1.containsPoint(intersection) && l2.containsPoint(intersection)) {
-            System.out.println("Lines : " + l1 + " and " + l2 + " intersects at: " + intersection);
+//            System.out.println("Lines : " + l1 + " and " + l2 + " intersects at: " + intersection);
             if (!q.isIntersectionPoint(intersection)) {
-//                q.addPoint(intersection);
                 q.addIntersectionPoint(intersection);
                 t.addIntersectionLines(intersection, l1, l2);
             }

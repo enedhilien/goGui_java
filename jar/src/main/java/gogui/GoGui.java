@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import static java.util.stream.Collectors.toList;
+
 public class GoGui {
 
     private static History history = new History();
@@ -102,6 +104,22 @@ public class GoGui {
         }
         return points;
     }
+
+    public static GeoList<Point> loadPoints_ZMUDA(String fileName) {
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+            List<Point> collectedPoints = bufferedReader.lines().map(line -> {
+                String[] split = line.split(" ");
+                return new Point(Double.valueOf(split[0]).intValue(), Double.valueOf(split[1]).intValue());
+            }).collect(toList());
+            return new GeoList<>(collectedPoints);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return new GeoList<>();
+    }
+
 
     public static void snapshot() {
         history.snapshot();

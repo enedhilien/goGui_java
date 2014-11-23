@@ -34,24 +34,24 @@ public class Polygon extends GeoObject {
         int pointIndex = points.indexOf(point);
         Point result;
 
-        if (pointIndex == 0) {
-            result = points.back();
-        } else {
-            result = points.get(pointIndex - 1);
-        }
-        return result;
-    }
-
-    public Point getRightNeighbor(Point point) {
-        int pointIndex = points.indexOf(point);
-        Point result;
-
         if (pointIndex == points.size() -1) {
             result = points.front();
         } else {
             result = points.get(pointIndex + 1);
         }
         return result;
+    }
+
+    public Point getRightNeighbor(Point point) {int pointIndex = points.indexOf(point);
+        Point result;
+
+        if (pointIndex == 0) {
+            result = points.back();
+        } else {
+            result = points.get(pointIndex - 1);
+        }
+        return result;
+
     }
 
     @Override

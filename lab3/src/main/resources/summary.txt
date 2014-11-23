@@ -1,0 +1,16 @@
+Algorytm sprawdzający czy występuje przecięcie:
+
+Wykorzystałem algorytm ze strony http://wazniak.mimuw.edu.pl/index.php?title=Zaawansowane_algorytmy_i_struktury_danych/Wyk%C5%82ad_12.
+Jako T użyłem zwykłego TreeSetu z Javy.
+
+
+Do pełnego algorytmu wykorzystałem 2 struktury:
+Q - trzyma informacje o tym :
+    a) które punkty miotła musi odwiedzić przez cały algorytm ( uzupełnianie w czasie wykrywania przecięć )
+    b) które z tych punktów są punktami przecięć
+    c) który punkt odwiedzamy przez miotłę następnym razem
+
+T - trzyma informację o:
+    a) aktywnych liniach ( przeciętych przez miotłę w danym momencie )
+    b) tym które linie przecinają się w którym punkcie
+

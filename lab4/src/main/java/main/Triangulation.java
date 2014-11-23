@@ -21,10 +21,19 @@ public class Triangulation {
     private static final String LAST_FOUND_POINTS_COLOR = "blue";
 
     public static void main(String[] args) {
+        fireAlgorithm("z_input1");
+        fireAlgorithm("input4");
+        fireAlgorithm("z_input4");
+        fireAlgorithm("z_input5");
+    }
 
-        String fileName = "input";
-
-        GeoList<Point> polygonPoints = GoGui.loadPoints(LAB4_SRC_MAIN_RESOURCES + fileName + INPUT_FILE_EXTENSION);
+    private static void fireAlgorithm(String fileName) {
+        GeoList<Point> polygonPoints;
+        if (fileName.startsWith("z_")) {
+            polygonPoints = GoGui.loadPoints_ZMUDA(LAB4_SRC_MAIN_RESOURCES + fileName + INPUT_FILE_EXTENSION);
+        } else {
+            polygonPoints = GoGui.loadPoints(LAB4_SRC_MAIN_RESOURCES + fileName + INPUT_FILE_EXTENSION);
+        }
         Polygon polygon = new Polygon(polygonPoints);
         GoGui.snapshot();
 
@@ -33,78 +42,75 @@ public class Triangulation {
         saveJSON("C:\\home\\aaaaStudia\\Semestr_VII\\Geometria\\gogui\\visualization-grunt\\public\\data\\triangulation." + fileName + ".data.json");
         saveJSON("lab4\\src\\main\\resources\\triangulation." + fileName + ".data.json");
         saveJSON("results\\triangulation." + fileName + ".data.json");
+        GoGui.clear();
     }
 
     private static List<Line> triangulatePolygon(Polygon polygon) {
 
-        List<PointWithSide> pointWithSides = allPointsWithSides(polygon);
+        List<PointWithSide> allPoints = allPointsWithSides(polygon);
 
         Stack<PointWithSide> stack = new Stack<>();
 
-        stack.push(pointWithSides.get(0));
-        stack.push(pointWithSides.get(1));
+        stack.push(allPoints.get(0));
+        stack.push(allPoints.get(1));
 
         GeoList<Line> foundLines = new GeoList<>();
 
         GeoList<Point> stackPoints = new GeoList<>();
-        stackPoints.push_back(pointWithSides.get(0).getPoint());
-        stackPoints.push_back(pointWithSides.get(1).getPoint());
+        stackPoints.push_back(allPoints.get(0).getPoint());
+        stackPoints.push_back(allPoints.get(1).getPoint());
         stackPoints.setColor(STACK_POINTS_COLOR);
         snapshot();
 
-        for (int i = 2; i < pointWithSides.size(); i++) {
-            PointWithSide nextPoint = pointWithSides.get(i);
+        for (int i = 2; i < allPoints.size(); i++) {
+            PointWithSide nextPoint = allPoints.get(i);
 
-            PointWithSide stackTopPoint = stack.peek();
+            PointWithSide firstFromStack = stack.peek();
 
-            if (areOnDifferentSide(nextPoint, stackTopPoint)) {
+            if (areOnDifferentSide(nextPoint, firstFromStack)) {
                 List<Line> collect = stack.stream().map(x -> new Line(nextPoint.getPoint(), x.getPoint())).collect(toList());
 
                 drawFoundLines(foundLines, collect);
 
                 stack.clear();
-                stack.add(stackTopPoint);
-                stack.add(nextPoint);
             } else {
-                List<PointPair> pointsStackPairs = toPairs(stack);
+                stack.pop();
+                PointWithSide secondFromStack = stack.peek();
 
-                PointWithSide lastFromStack = stack.pop();
-                for (PointPair pointPair : pointsStackPairs) {
-
-                    if (!isInsidePolygon(nextPoint, pointPair.getP1(), pointPair.getP2(), polygon)) {
+                while (canJoinPoints(nextPoint, firstFromStack, secondFromStack)) {
+                    drawFoundLines(foundLines, nextPoint, secondFromStack);
+                    firstFromStack = secondFromStack;
+                    stack.pop();
+                    if (stack.isEmpty()) {
+                        firstFromStack = secondFromStack;
                         break;
+                    } else {
+                        secondFromStack = stack.peek();
                     }
-
-                    drawFoundLines(foundLines, nextPoint, pointPair);
-                    lastFromStack = stack.pop();
                 }
-                stack.push(lastFromStack);
-                stack.push(nextPoint);
             }
+            stack.push(firstFromStack);
+            stack.push(nextPoint);
         }
         return foundLines;
     }
 
-    private static boolean isInsidePolygon(PointWithSide stackTopPoint, Point p1, Point p2, Polygon polygon) {
+    private static boolean canJoinPoints(PointWithSide p, PointWithSide q, PointWithSide r) {
 
-        Line line1 = new Line(stackTopPoint.getPoint(), p1);
-        Line line2 = new Line(stackTopPoint.getPoint(), p2);
+        double det = det(p.getPoint(), q.getPoint(), r.getPoint());
 
-        for (Line line : polygon.getLines()) {
-            Point intersection1 = line1.intersectionPoint(line);
-            Point intersection2 = line2.intersectionPoint(line);
-
-            if (line1.containsPoint(intersection1) && line.containsPoint(intersection1)) {
-                return false;
-            }
-
-            if (line1.containsPoint(intersection2) && line.containsPoint(intersection2)) {
-                return false;
-            }
-
+        if (det > 0 && Side.LEFT.equals(p.getSide())) {
+            return false;
         }
-
+        if (det < 0 && Side.RIGHT.equals(p.getSide())) {
+            return false;
+        }
         return true;
+    }
+
+    private static void drawFoundLines(GeoList<Line> foundLines, PointWithSide p, PointWithSide r) {
+        foundLines.add(new Line(p.getPoint(), r.getPoint()));
+        snapshot();
     }
 
     private static List<PointPair> toPairs(Stack<PointWithSide> stack) {
@@ -113,12 +119,13 @@ public class Triangulation {
             pairs.add(new PointPair(stack.get(i).getPoint(), stack.get(i + 1).getPoint()));
         }
 
+        Collections.reverse(pairs);
         return pairs;
     }
 
-    private static void drawFoundLines(GeoList<Line> foundLines, List<Line> collect) {
-        collect.forEach(x -> x.setColor(LAST_FOUND_POINTS_COLOR));
-        foundLines.addAll(collect);
+    private static void drawFoundLines(GeoList<Line> foundLines, List<Line> linesToDraw) {
+        linesToDraw.forEach(x -> x.setColor(LAST_FOUND_POINTS_COLOR));
+        foundLines.addAll(linesToDraw);
         snapshot();
     }
 
@@ -196,6 +203,10 @@ public class Triangulation {
         });
 
         return points;
+    }
+
+    static double det(Point x, Point y, Point z) {
+        return (x.x - z.x) * (y.y - z.y) - (x.y - z.y) * (y.x - z.x);
     }
 
     private static class PointPair {

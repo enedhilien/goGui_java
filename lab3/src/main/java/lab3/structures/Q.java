@@ -9,7 +9,6 @@ import java.util.*;
 public class Q {
 
     private GeoList<Point> guiPoints;
-//    private Point currentPoint = null;
     private int currentIndex = -1;
     private ArrayList<Point> points = new ArrayList<>();
     private GeoList<Point> intersectionPoints = new GeoList<>();
@@ -44,8 +43,6 @@ public class Q {
             insertIndex++;
         }
         points.add(insertIndex, p);
-//        points.add(p);
-//        Collections.sort(points);
     }
 
     public void addIntersectionPoint(Point intersectionPoint) {

@@ -17,21 +17,12 @@ public class T {
             return;
         }
 
-        Comparator<Line> lineComparator = (l1, l2) -> {
-            if (l1.getY(broomX) > l2.getY(broomX)) {
-                return 1;
-            } else if (l1.getY(broomX) < l2.getY(broomX)) {
-                return -1;
-            }
-            return 0;
-        };
         int indexToInsert = 0;
         for (int i = 0; i < activeLines.size(); i++) {
 
             Line activeLine = activeLines.get(i);
 
             if (activeLine.getY(broomX) < lineToInsert.getY(broomX)) {
-//            if (lineComparator.compare(lineToInsert, activeLine) >= 0) {
                 indexToInsert = i;
                 break;
             }
@@ -68,7 +59,6 @@ public class T {
         intersectionsLines.put(intersectionLine, new LinePair(l1, l2));
     }
 
-
     public void swapIntersectionLines(Point p) {
         if (intersectionsLines.containsKey(p)) {
             LinePair intersectionLines = intersectionsLines.get(p);
@@ -81,7 +71,6 @@ public class T {
             throw new IllegalArgumentException("No lines intersection at Point: " + p);
         }
     }
-
 
     public LinePair getIntersectionLines(Point p) {
         if (intersectionsLines.containsKey(p)) {

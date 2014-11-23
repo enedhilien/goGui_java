@@ -1,0 +1,6 @@
+Polygon - struktura zawierająca listę punktów wielokąta oraz linie je łączące,
+pozwala w prost sposób na pobranie lewego i prawego sąsiada danego punktu
+
+Do triangulacji wykorzystałem wrapper na klasę Punkt zawierający informację w której części wielokąta się znajduje ( lewa / prawa strona )
+
+Reszta algorytmu jest zgodna z tym podanym na wykładzie.
