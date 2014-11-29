@@ -5,7 +5,10 @@ import lab3.structures.LinePair;
 import lab3.structures.Q;
 import lab3.structures.T;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import static gogui.GoGui.*;
 
@@ -23,7 +26,6 @@ public class Lab3Main {
         GoGui.clear();
         Set<Point> intersectionPoints4 = fireAlgorithm("input4");
         GoGui.clear();
-//        intersectionPoints.forEach(System.out::println);
     }
 
     private static Set<Point> fireAlgorithm(String fileName) {
@@ -72,7 +74,7 @@ public class Lab3Main {
 
                     findIntersectionsWithNeighbouringLines(currentLine, q, t);
 
-                } else { // right end of segment
+                } else {
                     t.remove(currentLine);
                     Optional<Line> leftNeighbor = t.getRightNeighbor(currentLine);
                     Optional<Line> rightNeighbor = t.getLeftNeighbor(currentLine);

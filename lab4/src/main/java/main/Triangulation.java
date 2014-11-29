@@ -22,7 +22,6 @@ public class Triangulation {
 
     public static void main(String[] args) {
         fireAlgorithm("z_input1");
-        fireAlgorithm("input4");
         fireAlgorithm("z_input4");
         fireAlgorithm("z_input5");
     }

@@ -4,3 +4,9 @@ pozwala w prost sposób na pobranie lewego i prawego sąsiada danego punktu
 Do triangulacji wykorzystałem wrapper na klasę Punkt zawierający informację w której części wielokąta się znajduje ( lewa / prawa strona )
 
 Reszta algorytmu jest zgodna z tym podanym na wykładzie.
+
+
+
+Odnośnik do sprawdzenia zadania:
+poprawiłem działanie triangulacji na przykładzie podanym na zajęciach.
+Błąd polegał na złej klasyfikacji strony wielokąta do której należały punkty.
