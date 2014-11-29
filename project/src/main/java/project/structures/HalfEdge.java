@@ -1,12 +1,13 @@
 package project.structures;
 
-import gogui.Point;
-
 public class HalfEdge {
 
     HalfEdge prev, next, sibling;
-    Point start;
+    PointWithEdge start;
     Wall incidentWall;
 
+    public HalfEdge(PointWithEdge startPoint) {
+        this.start = startPoint;
 
+    }
 }

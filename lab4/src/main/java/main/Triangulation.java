@@ -170,7 +170,7 @@ public class Triangulation {
         List<Point> result = new ArrayList<>();
         Point lastNeighbor = topYPoint;
         do {
-            lastNeighbor = polygon.getRightNeighbor(lastNeighbor);
+            lastNeighbor = polygon.getPrevNeighbor(lastNeighbor);
             result.add(lastNeighbor);
         } while (!lastNeighbor.equals(bottomYPoint));
 
@@ -182,7 +182,7 @@ public class Triangulation {
         List<Point> result = new ArrayList<>();
         Point lastNeighbor = topYPoint;
         do {
-            lastNeighbor = polygon.getLeftNeighbor(lastNeighbor);
+            lastNeighbor = polygon.getNextNeighbor(lastNeighbor);
             result.add(lastNeighbor);
 
         } while (!lastNeighbor.equals(bottomYPoint));

@@ -30,7 +30,7 @@ public class Polygon extends GeoObject {
         return points;
     }
 
-    public Point getLeftNeighbor(Point point) {
+    public Point getNextNeighbor(Point point) {
         int pointIndex = points.indexOf(point);
         Point result;
 
@@ -42,7 +42,8 @@ public class Polygon extends GeoObject {
         return result;
     }
 
-    public Point getRightNeighbor(Point point) {int pointIndex = points.indexOf(point);
+    public Point getPrevNeighbor(Point point) {
+        int pointIndex = points.indexOf(point);
         Point result;
 
         if (pointIndex == 0) {

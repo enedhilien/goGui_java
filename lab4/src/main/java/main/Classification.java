@@ -52,8 +52,8 @@ public class Classification {
 
         for (Point point : polygon.getPoints()) {
 
-            Point leftNeighbor = polygon.getLeftNeighbor(point);
-            Point rightNeighbor = polygon.getRightNeighbor(point);
+            Point leftNeighbor = polygon.getNextNeighbor(point);
+            Point rightNeighbor = polygon.getPrevNeighbor(point);
 
             PointClassification classificationResult = classifyPoint(point, leftNeighbor, rightNeighbor);
             classificationMap.put(point, classificationResult);
