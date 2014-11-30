@@ -8,7 +8,6 @@ public class HalfEdge {
 
     public HalfEdge(PointWithEdge startPoint) {
         this.start = startPoint;
-
     }
 
 

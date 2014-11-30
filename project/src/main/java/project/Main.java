@@ -4,6 +4,8 @@ import gogui.*;
 import project.structures.HalfEdge;
 import project.structures.HalfEdgeDataStructure;
 import project.structures.PointWithEdge;
+import project.structures.graph.cycle.CycleCreator;
+import project.structures.graph.cycle.EdgesCycle;
 import project.structures.sweep.LinePair;
 import project.structures.sweep.Q;
 import project.structures.sweep.T;
@@ -40,12 +42,8 @@ public class Main {
     }
 
     private static Set<Point> fireAlgorithm(HalfEdgeDataStructure structure1, HalfEdgeDataStructure structure2) {
-        GeoList<Point> points = new GeoList<>();
-        GeoList<Line> helper = new GeoList<>();
-
         HalfEdgeDataStructure joinedStructure = HalfEdgeDataStructure.join(structure1, structure2);
 
-//        Map<Point, List<Line>> pointToLine = new HashMap<>();
         List<Line> lines1 = structure1.edges.stream().map(x -> new Line(x.start.point, x.sibling.start.point)).collect(toList());
         List<Line> lines2 = structure2.edges.stream().map(x -> new Line(x.start.point, x.sibling.start.point)).collect(toList());
 
@@ -140,11 +138,11 @@ public class Main {
                 }
 
             }
-
-
             System.out.println();
         }
 
+        // Create cycles:
+        List<EdgesCycle> cycles = CycleCreator.createCycles(joinedStructure.edges);
 
         System.out.println("Number of intersections: " + intersectionPoints.size());
         intersectionPoints.forEach(System.out::println);
