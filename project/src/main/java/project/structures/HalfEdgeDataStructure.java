@@ -1,5 +1,6 @@
 package project.structures;
 
+import gogui.Line;
 import gogui.Point;
 import gogui.Polygon;
 
@@ -11,12 +12,18 @@ import static java.util.stream.Collectors.toList;
 
 public class HalfEdgeDataStructure {
 
-    List<Wall> walls = new ArrayList<>();
-    List<PointWithEdge> points = new ArrayList<>();
-    List<HalfEdge> edges = new ArrayList<>();
+    public List<Wall> walls = new ArrayList<>();
+    public List<PointWithEdge> points = new ArrayList<>();
+    public List<HalfEdge> edges = new ArrayList<>();
 
     public HalfEdgeDataStructure(Wall wall, List<PointWithEdge> pointsWithEdges, List<HalfEdge> edges) {
         walls.add(wall);
+        this.points = pointsWithEdges;
+        this.edges = edges;
+    }
+
+    public HalfEdgeDataStructure(List<Wall> walls, List<PointWithEdge> pointsWithEdges, List<HalfEdge> edges) {
+        this.walls = walls;
         this.points = pointsWithEdges;
         this.edges = edges;
     }
@@ -100,5 +107,59 @@ public class HalfEdgeDataStructure {
         return first.get();
     }
 
+    public HalfEdge findEdge(Line l1, Line l2) {
 
+        for (HalfEdge edge : edges) {
+            if (matchesLine(edge, l1) || matchesLine(edge, l2)) {
+                return edge;
+            }
+        }
+        return null;
+    }
+
+    private boolean matchesLine(HalfEdge edge, Line line) {
+
+        if (edge.start.point.equals(line.getPoint1()) && edge.next.start.point.equals(line.getPoint2())) {
+            return true;
+        }
+        if (edge.start.point.equals(line.getPoint2()) && edge.next.start.point.equals(line.getPoint1())) {
+            return true;
+        }
+        return false;
+    }
+
+    public static HalfEdgeDataStructure join(HalfEdgeDataStructure structure1, HalfEdgeDataStructure structure2) {
+
+        List<Wall> walls = new ArrayList<>(structure1.walls);
+        List<HalfEdge> halfEdges = new ArrayList<>(structure1.edges);
+        List<PointWithEdge> points = new ArrayList<>(structure1.points);
+        walls.addAll(structure2.walls);
+        halfEdges.addAll(structure2.edges);
+        points.addAll(structure2.points);
+        return new HalfEdgeDataStructure(walls, points, halfEdges);
+    }
+
+    public HalfEdge find(Point prevEdgeStartPoint, Point prevEdgeEndPoint) {
+
+        for (HalfEdge edge : edges) {
+            if (edge.start.point.equals(prevEdgeStartPoint) && edge.next.start.point.equals(prevEdgeEndPoint)) {
+                return edge;
+            }
+
+        }
+        return null;
+    }
+
+    public void addIncidentalEdge(Point intersectionPoint, HalfEdge newHalfEdge) {
+
+        for (PointWithEdge point : points) {
+            if (point.point.equals(intersectionPoint)) {
+                point.incidentEdge = newHalfEdge;
+            }
+        }
+    }
+
+    public void addAll(List<HalfEdge> newHalfEdges) {
+        edges.addAll(newHalfEdges);
+    }
 }

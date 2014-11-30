@@ -4,8 +4,8 @@ import gogui.Point;
 
 public class PointWithEdge {
 
-    Point point;
-    HalfEdge incidentEdge;
+    public Point point;
+    public HalfEdge incidentEdge;
 
     public PointWithEdge(Point point, HalfEdge halfEdge) {
         this.point = point;
