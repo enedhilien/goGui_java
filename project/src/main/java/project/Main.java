@@ -5,6 +5,7 @@ import project.structures.HalfEdge;
 import project.structures.HalfEdgeDataStructure;
 import project.structures.PointWithEdge;
 import project.structures.graph.cycle.CycleCreator;
+import project.structures.graph.cycle.CycleGoGuiDrawer;
 import project.structures.graph.cycle.EdgesCycle;
 import project.structures.sweep.LinePair;
 import project.structures.sweep.Q;
@@ -144,8 +145,11 @@ public class Main {
         // Create cycles:
         List<EdgesCycle> cycles = CycleCreator.createCycles(joinedStructure.edges);
 
+        CycleGoGuiDrawer.draw(cycles);
+
         System.out.println("Number of intersections: " + intersectionPoints.size());
         intersectionPoints.forEach(System.out::println);
+
 
         return new HashSet<>(intersectionPoints);
     }
@@ -162,6 +166,7 @@ public class Main {
         Collections.reverse(copy);
         return copy;
     }
+
 
     private static void fixFarFromIntersectionPoints(HalfEdge e2, HalfEdge e11) {
         e11.next = e2.next;
