@@ -85,14 +85,17 @@ public class HalfEdgeDataStructure {
             pointsWithEdge.incidentEdge.incidentWall = wall;
         }
 
-//        List<HalfEdge> collect = pointsWithEdges.stream().map(x -> x.incidentEdge.sibling).filter(x -> x.incidentWall == null).collect(toList());
-//        collect.stream().forEach(x -> x.incidentWall = new Wall(null, "OUTER"));
+        List<HalfEdge> collect = pointsWithEdges.stream().map(x -> x.incidentEdge.sibling).filter(x -> x.incidentWall == null).collect(toList());
+        collect.stream().forEach(x -> x.incidentWall = new Wall(null, "OUTER"));
 
         for (HalfEdge edge : edges) {
             if (!edge.next.start.point.equals(edge.sibling.start.point)) {
                 throw new IllegalStateException();
             }
             if (!edge.prev.start.point.equals(edge.sibling.next.next.start.point)) {
+                throw new IllegalStateException();
+            }
+            if (edge.incidentWall == null) {
                 throw new IllegalStateException();
             }
         }

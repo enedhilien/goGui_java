@@ -11,8 +11,13 @@ public class HalfEdge {
     }
 
 
-    public void makeSibling(HalfEdge e1) {
+    public void makeSibling(HalfEdge e1, Wall value) {
         this.sibling = e1;
         e1.sibling = this;
+        if (this.incidentWall == null) {
+            this.incidentWall = value;
+        }
     }
+
+
 }

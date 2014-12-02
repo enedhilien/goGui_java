@@ -38,7 +38,8 @@ public class EdgesCycle {
     }
 
     public boolean isIntersection() {
-        Set<Wall> walls = edges.stream().map(x -> x.incidentWall).filter(x -> x != null).collect(toSet());
-        return walls.size() > 1;
+        Set<Wall> walls = edges.stream().map(x -> x.incidentWall).collect(toSet());
+        Set<Wall> collect = walls.stream().filter(x -> x == null || !"OUTER".equals(x.name)).collect(toSet());
+        return collect.size() > 1;
     }
 }

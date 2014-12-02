@@ -3,7 +3,7 @@ package project.structures;
 public class Wall {
 
     HalfEdge outerEdge;
-    String name;
+    public String name;
 
     public Wall(HalfEdge outerEdge, String name) {
         this.outerEdge = outerEdge;

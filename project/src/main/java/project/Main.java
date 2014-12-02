@@ -1,9 +1,11 @@
 package project;
 
 import gogui.*;
+import javafx.util.Pair;
 import project.structures.HalfEdge;
 import project.structures.HalfEdgeDataStructure;
 import project.structures.PointWithEdge;
+import project.structures.Wall;
 import project.structures.graph.cycle.CycleCreator;
 import project.structures.graph.cycle.CycleGoGuiDrawer;
 import project.structures.graph.cycle.EdgesCycle;
@@ -26,7 +28,15 @@ public class Main {
     public static void main(String[] args) {
 
         String fileName = "map1";
-        String fileName2 = "map6";
+
+        go(fileName, "map2");
+        go(fileName, "map3");
+        go(fileName, "map4");
+        go(fileName, "map5");
+        go(fileName, "map6");
+    }
+
+    private static void go(String fileName, String fileName2) {
         GeoList<Point> polygonPoints = GoGui.loadPoints_ZMUDA(LAB4_SRC_MAIN_RESOURCES + fileName + INPUT_FILE_EXTENSION);
         Polygon polygon = new Polygon(polygonPoints);
         HalfEdgeDataStructure halfEdgeDataStructure = HalfEdgeDataStructure.from(polygon, "A");
@@ -42,6 +52,8 @@ public class Main {
         snapshot();
         saveJSON("project\\src\\main\\resources\\project." + fileName2 + ".data.json");
         saveJSON("results\\project." + fileName2 + ".data.json");
+
+        GoGui.clear();
     }
 
     private static Set<Point> fireAlgorithm(HalfEdgeDataStructure structure1, HalfEdgeDataStructure structure2) {
@@ -89,14 +101,19 @@ public class Main {
 
             joinedStructure.addAll(newHalfEdges);
 
+            List<Pair<HalfEdge, Wall>> a = new ArrayList<>();
+            a.add(new Pair<>(e1, e1.sibling.incidentWall));
+            a.add(new Pair<>(e2, e2.sibling.incidentWall));
+            a.add(new Pair<>(f1, f1.sibling.incidentWall));
+            a.add(new Pair<>(f2, f2.sibling.incidentWall));
 
-            e11.makeSibling(e1);
-            e12.makeSibling(e2);
+            e11.makeSibling(e1, a.stream().filter(x -> x.getKey().equals(e1)).findAny().get().getValue());
+            e12.makeSibling(e2, a.stream().filter(x -> x.getKey().equals(e2)).findAny().get().getValue());
 
             structure1.addAll(Arrays.asList(e11, e12));
 
-            f11.makeSibling(f1);
-            f12.makeSibling(f2);
+            f11.makeSibling(f1, a.stream().filter(x -> x.getKey().equals(f1)).findAny().get().getValue());
+            f12.makeSibling(f2, a.stream().filter(x -> x.getKey().equals(f2)).findAny().get().getValue());
 
             structure2.addAll(Arrays.asList(f11, f12));
             //3
