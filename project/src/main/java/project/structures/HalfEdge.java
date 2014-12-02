@@ -18,6 +18,4 @@ public class HalfEdge {
             this.incidentWall = value;
         }
     }
-
-
 }

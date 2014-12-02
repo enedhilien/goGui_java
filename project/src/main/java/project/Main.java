@@ -25,19 +25,18 @@ public class Main {
     private static final String LAB4_SRC_MAIN_RESOURCES = "project\\src\\main\\resources\\";
 
     public static void main(String[] args) {
-
         String fileName = "map1";
 
-//        go(fileName, "map2");
-//        go(fileName, "map3");
-//        go(fileName, "map4");
-//        go(fileName, "map5");
-//        go(fileName, "map6");
-//        go(fileName, "map7");
-        go(fileName, "map8");
+        fireAlgorithmWithFiles(fileName, "map2");
+//        fireAlgorithmWithFiles(fileName, "map3");
+//        fireAlgorithmWithFiles(fileName, "map4");
+//        fireAlgorithmWithFiles(fileName, "map5");
+//        fireAlgorithmWithFiles(fileName, "map6");
+//        fireAlgorithmWithFiles(fileName, "map7");
+//        fireAlgorithmWithFiles(fileName, "map8");
     }
 
-    private static void go(String fileName, String fileName2) {
+    private static void fireAlgorithmWithFiles(String fileName, String fileName2) {
         GeoList<Point> polygonPoints = GoGui.loadPoints_ZMUDA(LAB4_SRC_MAIN_RESOURCES + fileName + INPUT_FILE_EXTENSION);
         Polygon polygon = new Polygon(polygonPoints);
         HalfEdgeDataStructure halfEdgeDataStructure = HalfEdgeDataStructure.from(polygon, "A");
@@ -46,18 +45,15 @@ public class Main {
         Polygon polygon2 = new Polygon(polygonPoints2);
         HalfEdgeDataStructure halfEdgeDataStructure2 = HalfEdgeDataStructure.from(polygon2, "B");
 
-
 //        withIntersections(halfEdgeDataStructure, halfEdgeDataStructure2);
-        fireAlgorithm(halfEdgeDataStructure, halfEdgeDataStructure2, polygon, polygon2);
+        fireAlgorithm(halfEdgeDataStructure, halfEdgeDataStructure2);
 
-//        snapshot();
         saveJSON("project\\src\\main\\resources\\project." + fileName2 + ".data.json");
         saveJSON("results\\project." + fileName2 + ".data.json");
-
         GoGui.clear();
     }
 
-    private static Set<Point> fireAlgorithm(HalfEdgeDataStructure structure1, HalfEdgeDataStructure structure2, Polygon polygon, Polygon polygon2) {
+    private static Set<Point> fireAlgorithm(HalfEdgeDataStructure structure1, HalfEdgeDataStructure structure2) {
         HalfEdgeDataStructure joinedStructure = HalfEdgeDataStructure.join(structure1, structure2);
 
         List<Line> lines1 = structure1.edges.stream().map(x -> new Line(x.start.point, x.sibling.start.point)).collect(toList());
@@ -75,6 +71,7 @@ public class Main {
             HalfEdge f2 = joinedStructure.findEdge(intersectionLines.l2, intersectionPoint);
             HalfEdge f1 = f2.sibling;
 
+            // Create new halfEdges with starting intersectionPoint as their starting point
             ArrayList<HalfEdge> newHalfEdges = new ArrayList<>();
 
             HalfEdge e11 = new HalfEdge(new PointWithEdge(intersectionPoint, null));
@@ -85,8 +82,8 @@ public class Main {
             newHalfEdges.add(e12);
             newHalfEdges.add(f11);
             newHalfEdges.add(f12);
-            //2
 
+            //Save new edges and join them with their applicable siblings existing previously
             joinedStructure.addAll(newHalfEdges);
 
             List<Pair<HalfEdge, Wall>> a = new ArrayList<>();
@@ -97,35 +94,28 @@ public class Main {
 
             e11.makeSibling(e1, a.stream().filter(x -> x.getKey().equals(e1)).findAny().get().getValue());
             e12.makeSibling(e2, a.stream().filter(x -> x.getKey().equals(e2)).findAny().get().getValue());
-
             structure1.addAll(Arrays.asList(e11, e12));
 
             f11.makeSibling(f1, a.stream().filter(x -> x.getKey().equals(f1)).findAny().get().getValue());
             f12.makeSibling(f2, a.stream().filter(x -> x.getKey().equals(f2)).findAny().get().getValue());
-
             structure2.addAll(Arrays.asList(f11, f12));
-            //3
+
+            //fix halfEdges connections on end of lines that intersects
             fixFarFromIntersectionPoints(e2, e11);
             fixFarFromIntersectionPoints(e1, e12);
             fixFarFromIntersectionPoints(f2, f11);
             fixFarFromIntersectionPoints(f1, f12);
 
-            ArrayList<Point> CWCoordinatesSortedList = new ArrayList<>();
-            CWCoordinatesSortedList.add(e1.start.point);
-            CWCoordinatesSortedList.add(e2.start.point);
-            CWCoordinatesSortedList.add(f1.start.point);
-            CWCoordinatesSortedList.add(f2.start.point);
+            ArrayList<Point> CWCoordinatesSortedList = getClockWisePointsAroundIntersectionPoint(intersectionPoint, e2, e1, f2, f1);
 
-            sortPointByPolarCoordinates(intersectionPoint, CWCoordinatesSortedList);
+            List<Point> CCWCoordinatesSortedList = getCCWPointsList(CWCoordinatesSortedList);
 
-            List<Point> CCWCoordinatesSortedList = getReversed(CWCoordinatesSortedList);
-
-            // 4
+            // fix intersection lines halfEdges
             List<HalfEdge> edgesToFix = new ArrayList<>(Arrays.asList(e1, e2, f1, f2));
 
             for (HalfEdge edgeToFix : edgesToFix) {
                 Point edgeToFixEndPoint = edgeToFix.sibling.start.point;
-                if (edgeToFixEndPoint.equals(intersectionPoint)) { // ma v jako początek - (2)
+                if (edgeToFixEndPoint.equals(intersectionPoint)) { // should have end point in intersection point
                     Point prevEdgeStartPoint = findNext(edgeToFix.next.start.point, CCWCoordinatesSortedList);
                     HalfEdge nextEdge = joinedStructure.findStartingFromIntersectionPoint(edgeToFix.sibling.start.point, prevEdgeStartPoint);
                     if (!nextEdge.start.point.equals(intersectionPoint)) {
@@ -166,6 +156,17 @@ public class Main {
         }
 
         return new HashSet<>(intersectionPoints);
+    }
+
+    private static ArrayList<Point> getClockWisePointsAroundIntersectionPoint(Point intersectionPoint, HalfEdge e2, HalfEdge e1, HalfEdge f2, HalfEdge f1) {
+        ArrayList<Point> CWCoordinatesSortedList = new ArrayList<>();
+        CWCoordinatesSortedList.add(e1.start.point);
+        CWCoordinatesSortedList.add(e2.start.point);
+        CWCoordinatesSortedList.add(f1.start.point);
+        CWCoordinatesSortedList.add(f2.start.point);
+
+        sortPointByPolarCoordinates(intersectionPoint, CWCoordinatesSortedList);
+        return CWCoordinatesSortedList;
     }
 
     private static void findIntersections(List<Line> lines1, List<Line> lines2, Set<Point> intersectionPoints, T t) {
@@ -212,7 +213,7 @@ public class Main {
         return list.get(nextIndex);
     }
 
-    private static List<Point> getReversed(ArrayList<Point> polarCoordinatesSortedList) {
+    private static List<Point> getCCWPointsList(ArrayList<Point> polarCoordinatesSortedList) {
         ArrayList<Point> copy = new ArrayList<>(polarCoordinatesSortedList);
         Collections.reverse(copy);
         return copy;

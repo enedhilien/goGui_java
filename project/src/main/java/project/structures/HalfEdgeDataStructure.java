@@ -147,12 +147,6 @@ public class HalfEdgeDataStructure {
         List<HalfEdge> collected = edges.stream().filter(x -> x.start.point.equals(l1.getPoint1()) || x.start.point.equals(l1.getPoint2()) || x.next.start.point.equals(l1.getPoint1()) || x.next.start.point.equals(l1.getPoint2())).collect(toList());
         List<HalfEdge> collected2 = collected.stream().filter(x -> new Line(x.start.point, x.next.start.point).containsPoint(intersectionPoint)).collect(toList());
         return collected2.stream().findAny().orElse(null);
-//        for (HalfEdge edge : edges) {
-//            if (l1.containsPoint(edge.start.point) && l1.containsPoint(edge.next.start.point)) {
-//                return edge;
-//            }
-//        }
-//        return null;
     }
 
     private boolean matchesLine(HalfEdge edge, Line line, Point intersectionPoint) {
@@ -197,14 +191,6 @@ public class HalfEdgeDataStructure {
 
         }
         return null;
-    }
-
-    public void addIncidentalEdge(Point intersectionPoint, HalfEdge newHalfEdge) {
-        for (PointWithEdge point : points) {
-            if (point.point.equals(intersectionPoint)) {
-                point.incidentEdge = newHalfEdge;
-            }
-        }
     }
 
     public void addAll(List<HalfEdge> newHalfEdges) {
