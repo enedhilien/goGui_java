@@ -34,7 +34,7 @@ public class Polygon extends GeoObject {
         int pointIndex = points.indexOf(point);
         Point result;
 
-        if (pointIndex == points.size() -1) {
+        if (pointIndex == points.size() - 1) {
             result = points.front();
         } else {
             result = points.get(pointIndex + 1);

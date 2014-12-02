@@ -29,11 +29,13 @@ public class Main {
 
         String fileName = "map1";
 
-        go(fileName, "map2");
-        go(fileName, "map3");
-        go(fileName, "map4");
-        go(fileName, "map5");
-        go(fileName, "map6");
+//        go(fileName, "map2");
+//        go(fileName, "map3");
+//        go(fileName, "map4");
+//        go(fileName, "map5");
+//        go(fileName, "map6");
+//        go(fileName, "map7");
+        go(fileName, "map8");
     }
 
     private static void go(String fileName, String fileName2) {
@@ -73,11 +75,15 @@ public class Main {
                     if (l1.containsPoint(intersectionPoint) && l2.containsPoint(intersectionPoint)) {
                         intersectionPoints.add(intersectionPoint);
                         t.addIntersectionLines(intersectionPoint, l1, l2);
-                        snapshot();
                     }
                 }
             }
         }
+
+        GeoList<Point> intersectionPointsGeoList = new GeoList<>();
+        intersectionPointsGeoList.addAll(intersectionPoints);
+        snapshot();
+
         for (Point intersectionPoint : intersectionPoints) {
             LinePair intersectionLines = t.getIntersectionLines(intersectionPoint);
             HalfEdge e2 = joinedStructure.findEdge(intersectionLines.l1, intersectionPoint);
@@ -172,16 +178,13 @@ public class Main {
         // Create cycles:
         List<EdgesCycle> cycles = CycleCreator.createCycles(joinedStructure.edges);
 
-        CycleGoGuiDrawer.draw(cycles);
-
         System.out.println("Number of intersections: " + intersectionPoints.size());
         intersectionPoints.forEach(System.out::println);
-
-        snapshot();
 
         GeoList<Line> linesOfItersection = new GeoList<>();
 
         for (EdgesCycle cycle : cycles) {
+            CycleGoGuiDrawer.draw(cycle);
             if (cycle.isIntersection()) {
                 linesOfItersection.addAll(cycle.getLines());
             }
@@ -208,7 +211,6 @@ public class Main {
                     if (l1.containsPoint(intersectionPoint) && l2.containsPoint(intersectionPoint)) {
                         intersectionPoints.add(intersectionPoint);
                         t.addIntersectionLines(intersectionPoint, l1, l2);
-                        snapshot();
                     }
                 }
             }
@@ -253,50 +255,9 @@ public class Main {
         });
     }
 
-    private static void findIntersectionsWithNeighbouringLines(Line currentLine, Q q, T t) {
-        Optional<Line> rightNeighbor = t.getRightNeighbor(currentLine);
-
-        if (rightNeighbor.isPresent()) {
-            Line line = rightNeighbor.get();
-
-            processNeighboringLine(q, currentLine, line, t);
-        }
-
-        Optional<Line> leftNeighbor = t.getLeftNeighbor(currentLine);
-
-        if (leftNeighbor.isPresent()) {
-            Line line = leftNeighbor.get();
-
-            processNeighboringLine(q, currentLine, line, t);
-        }
-    }
-
     private static void processNeighboringLine(Q q, Line currentLine, Line line, T t) {
         line.activate();
-        snapshot();
         findIntersection(currentLine, line, q, t);
-    }
-
-    private static Point getAnotherEnd(Point knownPoint, Line line) {
-        Point other;
-        if (knownPoint == line.getPoint1()) {
-            other = line.getPoint2();
-        } else {
-            other = line.getPoint1();
-        }
-        return other;
-    }
-
-    private static Line getNextBroomstick(GeoList<Line> helper, Line broomstick, double x) {
-        if (broomstick == null) {
-            broomstick = new Line(new Point(x, 0.0), new Point(x, 1000.0));
-        } else {
-            helper.remove(broomstick);
-            broomstick = new Line(new Point(x, 0.0), new Point(x, 1000.0));
-        }
-
-        helper.push_back(broomstick);
-        return broomstick;
     }
 
     private static void findIntersection(Line l1, Line l2, Q q, T t) {
@@ -308,9 +269,6 @@ public class Main {
                 q.addIntersectionPoint(intersection);
                 t.addIntersectionLines(intersection, l1, l2);
             }
-            snapshot();
         }
     }
-
-
 }

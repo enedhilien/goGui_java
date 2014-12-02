@@ -21,4 +21,12 @@ public class CycleGoGuiDrawer {
         }
         activeLines.clear();
     }
+
+    public static void draw(EdgesCycle cycle) {
+        GeoList<Line> activeLines = new GeoList<>();
+        activeLines.addAll(cycle.getLines());
+        activeLines.setColor("red");
+        GoGui.snapshot();
+        activeLines.clear();
+    }
 }

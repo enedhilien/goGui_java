@@ -29,7 +29,8 @@ public class HalfEdgeDataStructure {
     }
 
     public static HalfEdgeDataStructure from(Polygon polygon, String name) {
-        Wall wall = new Wall(null, name);
+        Wall innerWall = new Wall(null, name);
+        Wall outerWall = new Wall(null, "OUTER");
 
         List<PointWithEdge> pointsWithEdges = polygon.getPoints().stream().map(x -> new PointWithEdge(x, null)).collect(toList());
 
@@ -45,6 +46,8 @@ public class HalfEdgeDataStructure {
             PointWithEdge nextPoint = getNextNeighbor(thisPoint, pointsWithEdges, polygon);
 
             HalfEdge edgeToNext = new HalfEdge(thisPoint);
+            edgeToNext.incidentWall = innerWall;
+
             thisPoint.incidentEdge = edgeToNext;
             HalfEdge edgeFromNext = new HalfEdge(nextPoint);
 
@@ -80,13 +83,10 @@ public class HalfEdgeDataStructure {
         edges.get(totalEdges - 2).next = edges.get(0);
         edges.get(totalEdges - 1).prev = edges.get(1);
 
-        wall.outerEdge = firstToSecond;
-        for (PointWithEdge pointsWithEdge : pointsWithEdges) {
-            pointsWithEdge.incidentEdge.incidentWall = wall;
-        }
+        innerWall.outerEdge = firstToSecond;
 
         List<HalfEdge> collect = pointsWithEdges.stream().map(x -> x.incidentEdge.sibling).filter(x -> x.incidentWall == null).collect(toList());
-        collect.stream().forEach(x -> x.incidentWall = new Wall(null, "OUTER"));
+        collect.stream().forEach(x -> x.incidentWall = outerWall);
 
         for (HalfEdge edge : edges) {
             if (!edge.next.start.point.equals(edge.sibling.start.point)) {
@@ -100,8 +100,21 @@ public class HalfEdgeDataStructure {
             }
         }
 
+        HalfEdge start = edges.get(0);
+        checkIfHaveSameWall(start);
+        checkIfHaveSameWall(start.sibling);
 
-        return new HalfEdgeDataStructure(wall, pointsWithEdges, edges);
+        return new HalfEdgeDataStructure(innerWall, pointsWithEdges, edges);
+    }
+
+    private static void checkIfHaveSameWall(HalfEdge start) {
+        HalfEdge current = start;
+        do {
+            if (current.incidentWall != start.incidentWall) {
+                throw new IllegalStateException();
+            }
+            current = current.next;
+        } while (start != current);
     }
 
     private static void addSiblingsToCollection(List<HalfEdge> edges, HalfEdge edgeToNext, HalfEdge edgeFromNext) {
