@@ -3,9 +3,13 @@ package project.structures.graph.cycle;
 import gogui.Line;
 import gogui.Point;
 import project.structures.HalfEdge;
+import project.structures.Wall;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
 
 public class EdgesCycle {
 
@@ -31,5 +35,10 @@ public class EdgesCycle {
         }
 
         return result;
+    }
+
+    public boolean isIntersection() {
+        Set<Wall> walls = edges.stream().map(x -> x.incidentWall).filter(x -> x != null).collect(toSet());
+        return walls.size() > 1;
     }
 }

@@ -26,20 +26,22 @@ public class Main {
     public static void main(String[] args) {
 
         String fileName = "map1";
-        String fileName2 = "map2";
+        String fileName2 = "map6";
         GeoList<Point> polygonPoints = GoGui.loadPoints_ZMUDA(LAB4_SRC_MAIN_RESOURCES + fileName + INPUT_FILE_EXTENSION);
-        GeoList<Point> polygonPoints2 = GoGui.loadPoints_ZMUDA(LAB4_SRC_MAIN_RESOURCES + fileName2 + INPUT_FILE_EXTENSION);
         Polygon polygon = new Polygon(polygonPoints);
+        HalfEdgeDataStructure halfEdgeDataStructure = HalfEdgeDataStructure.from(polygon, "A");
+
+        GeoList<Point> polygonPoints2 = GoGui.loadPoints_ZMUDA(LAB4_SRC_MAIN_RESOURCES + fileName2 + INPUT_FILE_EXTENSION);
         Polygon polygon2 = new Polygon(polygonPoints2);
+        HalfEdgeDataStructure halfEdgeDataStructure2 = HalfEdgeDataStructure.from(polygon2, "B");
 
-        HalfEdgeDataStructure halfEdgeDataStructure = HalfEdgeDataStructure.from(polygon);
-        HalfEdgeDataStructure halfEdgeDataStructure2 = HalfEdgeDataStructure.from(polygon2);
 
+//        withIntersections(halfEdgeDataStructure, halfEdgeDataStructure2);
         fireAlgorithm(halfEdgeDataStructure, halfEdgeDataStructure2);
 
         snapshot();
-        saveJSON("project\\src\\main\\resources\\project." + fileName + ".data.json");
-        saveJSON("results\\project." + fileName + ".data.json");
+        saveJSON("project\\src\\main\\resources\\project." + fileName2 + ".data.json");
+        saveJSON("results\\project." + fileName2 + ".data.json");
     }
 
     private static Set<Point> fireAlgorithm(HalfEdgeDataStructure structure1, HalfEdgeDataStructure structure2) {
@@ -66,9 +68,9 @@ public class Main {
         }
         for (Point intersectionPoint : intersectionPoints) {
             LinePair intersectionLines = t.getIntersectionLines(intersectionPoint);
-            HalfEdge e2 = structure1.findEdge(intersectionLines.l1, intersectionLines.l2);
+            HalfEdge e2 = joinedStructure.findEdge(intersectionLines.l1, intersectionPoint);
             HalfEdge e1 = e2.sibling;
-            HalfEdge f2 = structure2.findEdge(intersectionLines.l1, intersectionLines.l2);
+            HalfEdge f2 = joinedStructure.findEdge(intersectionLines.l2, intersectionPoint);
             HalfEdge f1 = f2.sibling;
 
             // halfEdge1
@@ -90,8 +92,13 @@ public class Main {
 
             e11.makeSibling(e1);
             e12.makeSibling(e2);
+
+            structure1.addAll(Arrays.asList(e11, e12));
+
             f11.makeSibling(f1);
             f12.makeSibling(f2);
+
+            structure2.addAll(Arrays.asList(f11, f12));
             //3
             fixFarFromIntersectionPoints(e2, e11);
             fixFarFromIntersectionPoints(e1, e12);
@@ -121,7 +128,7 @@ public class Main {
                     joinedStructure.addIncidentalEdge(intersectionPoint, edgeToFix);
 
                     Point prevEdgeStartPoint = findNext(edgeToFix.next.start.point, CWCoordinatesSortedList);
-                    HalfEdge prevEdge = joinedStructure.find(prevEdgeStartPoint, edgeToFixStartPoint);
+                    HalfEdge prevEdge = joinedStructure.findStartingFromIntersectionPoint(prevEdgeStartPoint, edgeToFixStartPoint);
 
                     prevEdge.next = edgeToFix;
                     edgeToFix.prev = prevEdge;
@@ -129,7 +136,10 @@ public class Main {
                     System.out.println();
                 } else if (edgeToFixEndPoint.equals(intersectionPoint)) { // ma v jako początek - (2)
                     Point prevEdgeStartPoint = findNext(edgeToFix.next.start.point, CCWCoordinatesSortedList);
-                    HalfEdge nextEdge = joinedStructure.find(edgeToFix.sibling.start.point, prevEdgeStartPoint);
+                    HalfEdge nextEdge = joinedStructure.findStartingFromIntersectionPoint(edgeToFix.sibling.start.point, prevEdgeStartPoint);
+                    if (!nextEdge.start.point.equals(intersectionPoint)) {
+                        nextEdge = nextEdge.sibling;
+                    }
 
                     nextEdge.prev = edgeToFix;
                     edgeToFix.next = nextEdge;
@@ -150,8 +160,46 @@ public class Main {
         System.out.println("Number of intersections: " + intersectionPoints.size());
         intersectionPoints.forEach(System.out::println);
 
+        snapshot();
+
+        GeoList<Line> linesOfItersection = new GeoList<>();
+
+        for (EdgesCycle cycle : cycles) {
+            if (cycle.isIntersection()) {
+                linesOfItersection.addAll(cycle.getLines());
+            }
+        }
+        linesOfItersection.setColor("red");
+        snapshot();
 
         return new HashSet<>(intersectionPoints);
+    }
+
+    private static void withIntersections(HalfEdgeDataStructure structure1, HalfEdgeDataStructure structure2) {
+
+        List<Line> lines1 = structure1.edges.stream().map(x -> new Line(x.start.point, x.sibling.start.point)).collect(toList());
+        List<Line> lines2 = structure2.edges.stream().map(x -> new Line(x.start.point, x.sibling.start.point)).collect(toList());
+
+        Set<Point> intersectionPoints = new HashSet<>();
+
+        T t = new T();
+
+        for (Line l1 : lines1) {
+            for (Line l2 : lines2) {
+                if (!l1.isParallel(l2)) {
+                    Point intersectionPoint = l1.intersectionPoint(l2);
+                    if (l1.containsPoint(intersectionPoint) && l2.containsPoint(intersectionPoint)) {
+                        intersectionPoints.add(intersectionPoint);
+                        t.addIntersectionLines(intersectionPoint, l1, l2);
+                        snapshot();
+                    }
+                }
+            }
+        }
+
+        GeoList<Point> points = new GeoList<>();
+        points.addAll(intersectionPoints);
+        snapshot();
     }
 
     private static Point findNext(Point edgeStartPoint, List<Point> list) {
@@ -168,9 +216,9 @@ public class Main {
     }
 
 
-    private static void fixFarFromIntersectionPoints(HalfEdge e2, HalfEdge e11) {
-        e11.next = e2.next;
-        e11.next.prev = e11;
+    private static void fixFarFromIntersectionPoints(HalfEdge original, HalfEdge startingAtIntersection) {
+        startingAtIntersection.next = original.next;
+        startingAtIntersection.next.prev = startingAtIntersection;
     }
 
     private static void sortPointByPolarCoordinates(Point intersectionPoint, List<Point> polarCoordinatesSortedList) {
@@ -246,5 +294,6 @@ public class Main {
             snapshot();
         }
     }
+
 
 }
