@@ -1,4 +1,4 @@
-package project.structures.graph.cycle;
+package project.structures.cycle;
 
 import gogui.GeoList;
 import gogui.GoGui;

@@ -6,9 +6,9 @@ import project.structures.HalfEdge;
 import project.structures.HalfEdgeDataStructure;
 import project.structures.PointWithEdge;
 import project.structures.Wall;
-import project.structures.graph.cycle.CycleCreator;
-import project.structures.graph.cycle.CycleGoGuiDrawer;
-import project.structures.graph.cycle.EdgesCycle;
+import project.structures.cycle.CycleCreator;
+import project.structures.cycle.CycleGoGuiDrawer;
+import project.structures.cycle.EdgesCycle;
 import project.structures.sweep.LinePair;
 import project.structures.sweep.T;
 
