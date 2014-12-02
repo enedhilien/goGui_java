@@ -30,7 +30,7 @@ public class HalfEdgeDataStructure {
 
     public static HalfEdgeDataStructure from(Polygon polygon, String name) {
         Wall innerWall = new Wall(null, name);
-        Wall outerWall = new Wall(null, "OUTER");
+        Wall outerWall = new Wall(null, Wall.OUTER_WALL_NAME);
 
         List<PointWithEdge> pointsWithEdges = polygon.getPoints().stream().map(x -> new PointWithEdge(x, null)).collect(toList());
 
@@ -200,7 +200,6 @@ public class HalfEdgeDataStructure {
     }
 
     public void addIncidentalEdge(Point intersectionPoint, HalfEdge newHalfEdge) {
-
         for (PointWithEdge point : points) {
             if (point.point.equals(intersectionPoint)) {
                 point.incidentEdge = newHalfEdge;

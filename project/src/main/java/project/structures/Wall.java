@@ -2,6 +2,8 @@ package project.structures;
 
 public class Wall {
 
+    public static final String OUTER_WALL_NAME = "OUTER";
+
     HalfEdge outerEdge;
     public String name;
 

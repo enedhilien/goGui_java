@@ -10,7 +10,6 @@ import project.structures.graph.cycle.CycleCreator;
 import project.structures.graph.cycle.CycleGoGuiDrawer;
 import project.structures.graph.cycle.EdgesCycle;
 import project.structures.sweep.LinePair;
-import project.structures.sweep.Q;
 import project.structures.sweep.T;
 
 import java.util.*;
@@ -49,40 +48,25 @@ public class Main {
 
 
 //        withIntersections(halfEdgeDataStructure, halfEdgeDataStructure2);
-        fireAlgorithm(halfEdgeDataStructure, halfEdgeDataStructure2);
+        fireAlgorithm(halfEdgeDataStructure, halfEdgeDataStructure2, polygon, polygon2);
 
-        snapshot();
+//        snapshot();
         saveJSON("project\\src\\main\\resources\\project." + fileName2 + ".data.json");
         saveJSON("results\\project." + fileName2 + ".data.json");
 
         GoGui.clear();
     }
 
-    private static Set<Point> fireAlgorithm(HalfEdgeDataStructure structure1, HalfEdgeDataStructure structure2) {
+    private static Set<Point> fireAlgorithm(HalfEdgeDataStructure structure1, HalfEdgeDataStructure structure2, Polygon polygon, Polygon polygon2) {
         HalfEdgeDataStructure joinedStructure = HalfEdgeDataStructure.join(structure1, structure2);
 
         List<Line> lines1 = structure1.edges.stream().map(x -> new Line(x.start.point, x.sibling.start.point)).collect(toList());
         List<Line> lines2 = structure2.edges.stream().map(x -> new Line(x.start.point, x.sibling.start.point)).collect(toList());
 
         Set<Point> intersectionPoints = new HashSet<>();
-
         T t = new T();
 
-        for (Line l1 : lines1) {
-            for (Line l2 : lines2) {
-                if (!l1.isParallel(l2)) {
-                    Point intersectionPoint = l1.intersectionPoint(l2);
-                    if (l1.containsPoint(intersectionPoint) && l2.containsPoint(intersectionPoint)) {
-                        intersectionPoints.add(intersectionPoint);
-                        t.addIntersectionLines(intersectionPoint, l1, l2);
-                    }
-                }
-            }
-        }
-
-        GeoList<Point> intersectionPointsGeoList = new GeoList<>();
-        intersectionPointsGeoList.addAll(intersectionPoints);
-        snapshot();
+        findIntersections(lines1, lines2, intersectionPoints, t);
 
         for (Point intersectionPoint : intersectionPoints) {
             LinePair intersectionLines = t.getIntersectionLines(intersectionPoint);
@@ -90,8 +74,6 @@ public class Main {
             HalfEdge e1 = e2.sibling;
             HalfEdge f2 = joinedStructure.findEdge(intersectionLines.l2, intersectionPoint);
             HalfEdge f1 = f2.sibling;
-
-            // halfEdge1
 
             ArrayList<HalfEdge> newHalfEdges = new ArrayList<>();
 
@@ -140,24 +122,10 @@ public class Main {
 
             // 4
             List<HalfEdge> edgesToFix = new ArrayList<>(Arrays.asList(e1, e2, f1, f2));
-//            edgesToFix.addAll(newHalfEdges);
 
             for (HalfEdge edgeToFix : edgesToFix) {
-                Point edgeToFixStartPoint = edgeToFix.start.point;
                 Point edgeToFixEndPoint = edgeToFix.sibling.start.point;
-                // ma v jako koniec - (1)
-                if (edgeToFixStartPoint.equals(intersectionPoint)) {
-
-                    joinedStructure.addIncidentalEdge(intersectionPoint, edgeToFix);
-
-                    Point prevEdgeStartPoint = findNext(edgeToFix.next.start.point, CWCoordinatesSortedList);
-                    HalfEdge prevEdge = joinedStructure.findStartingFromIntersectionPoint(prevEdgeStartPoint, edgeToFixStartPoint);
-
-                    prevEdge.next = edgeToFix;
-                    edgeToFix.prev = prevEdge;
-
-                    System.out.println();
-                } else if (edgeToFixEndPoint.equals(intersectionPoint)) { // ma v jako początek - (2)
+                if (edgeToFixEndPoint.equals(intersectionPoint)) { // ma v jako początek - (2)
                     Point prevEdgeStartPoint = findNext(edgeToFix.next.start.point, CCWCoordinatesSortedList);
                     HalfEdge nextEdge = joinedStructure.findStartingFromIntersectionPoint(edgeToFix.sibling.start.point, prevEdgeStartPoint);
                     if (!nextEdge.start.point.equals(intersectionPoint)) {
@@ -170,40 +138,37 @@ public class Main {
                 } else {
                     throw new IllegalStateException();
                 }
-
             }
-            System.out.println();
         }
 
-        // Create cycles:
         List<EdgesCycle> cycles = CycleCreator.createCycles(joinedStructure.edges);
 
-        System.out.println("Number of intersections: " + intersectionPoints.size());
-        intersectionPoints.forEach(System.out::println);
-
-        GeoList<Line> linesOfItersection = new GeoList<>();
+        GeoList<Line> foundCyclesLines = new GeoList<>();
 
         for (EdgesCycle cycle : cycles) {
             CycleGoGuiDrawer.draw(cycle);
             if (cycle.isIntersection()) {
-                linesOfItersection.addAll(cycle.getLines());
+                foundCyclesLines.addAll(cycle.getLines());
             }
         }
-        linesOfItersection.setColor("red");
+        foundCyclesLines.setColor("red");
         snapshot();
+
+        List<EdgesCycle> notOuterCycles = cycles.stream().filter(x -> !x.getEdges().get(0).incidentWall.name.equals(Wall.OUTER_WALL_NAME)).collect(toList());
+        if (notOuterCycles.size() == 2 && intersectionPoints.size() == 0) {
+            EdgesCycle firstCycle = notOuterCycles.get(0);
+            EdgesCycle secondCycle = notOuterCycles.get(1);
+            if (firstCycle.contains(secondCycle)) {
+                CycleGoGuiDrawer.draw(secondCycle);
+            } else if (secondCycle.contains(firstCycle)) {
+                CycleGoGuiDrawer.draw(firstCycle);
+            }
+        }
 
         return new HashSet<>(intersectionPoints);
     }
 
-    private static void withIntersections(HalfEdgeDataStructure structure1, HalfEdgeDataStructure structure2) {
-
-        List<Line> lines1 = structure1.edges.stream().map(x -> new Line(x.start.point, x.sibling.start.point)).collect(toList());
-        List<Line> lines2 = structure2.edges.stream().map(x -> new Line(x.start.point, x.sibling.start.point)).collect(toList());
-
-        Set<Point> intersectionPoints = new HashSet<>();
-
-        T t = new T();
-
+    private static void findIntersections(List<Line> lines1, List<Line> lines2, Set<Point> intersectionPoints, T t) {
         for (Line l1 : lines1) {
             for (Line l2 : lines2) {
                 if (!l1.isParallel(l2)) {
@@ -215,6 +180,25 @@ public class Main {
                 }
             }
         }
+
+        System.out.println("Number of intersections: " + intersectionPoints.size());
+        intersectionPoints.forEach(System.out::println);
+
+        GeoList<Point> intersectionPointsGeoList = new GeoList<>();
+        intersectionPointsGeoList.addAll(intersectionPoints);
+        snapshot();
+    }
+
+    private static void withIntersections(HalfEdgeDataStructure structure1, HalfEdgeDataStructure structure2) {
+
+        List<Line> lines1 = structure1.edges.stream().map(x -> new Line(x.start.point, x.sibling.start.point)).collect(toList());
+        List<Line> lines2 = structure2.edges.stream().map(x -> new Line(x.start.point, x.sibling.start.point)).collect(toList());
+
+        Set<Point> intersectionPoints = new HashSet<>();
+
+        T t = new T();
+
+        findIntersections(lines1, lines2, intersectionPoints, t);
 
         GeoList<Point> points = new GeoList<>();
         points.addAll(intersectionPoints);
@@ -255,20 +239,4 @@ public class Main {
         });
     }
 
-    private static void processNeighboringLine(Q q, Line currentLine, Line line, T t) {
-        line.activate();
-        findIntersection(currentLine, line, q, t);
-    }
-
-    private static void findIntersection(Line l1, Line l2, Q q, T t) {
-        Point intersection = l1.intersectionPoint(l2);
-
-        if (l1.containsPoint(intersection) && l2.containsPoint(intersection)) {
-//            System.out.println("Lines : " + l1 + " and " + l2 + " intersects at: " + intersection);
-            if (!q.isIntersectionPoint(intersection)) {
-                q.addIntersectionPoint(intersection);
-                t.addIntersectionLines(intersection, l1, l2);
-            }
-        }
-    }
 }
