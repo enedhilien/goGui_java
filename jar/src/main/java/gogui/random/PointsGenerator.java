@@ -1,5 +1,9 @@
 package gogui.random;
 
+import gogui.Point;
+import gogui.random.strategy.PointGeneratorStrategy;
+
+import java.util.List;
 import java.util.Random;
 
 public class PointsGenerator {
@@ -14,6 +18,14 @@ public class PointsGenerator {
 
         double f = new Random().nextDouble();
         return rMin + f * (rMax - rMin);
+    }
+
+    public static double radianRandom(){
+        return new Random().nextDouble()*2*Math.PI;
+    }
+
+    public static List<Point> generate(int points, PointGeneratorStrategy strategy) {
+        return strategy.generate(points);
     }
 
 //    static Point withinRectangle(double xmin, double xmax, double ymin, double ymax);

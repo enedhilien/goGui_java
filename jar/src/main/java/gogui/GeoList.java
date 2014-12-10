@@ -41,6 +41,18 @@ public class GeoList<T extends GeoObject> extends ArrayList<T> {
         return !this.isEmpty() ? this.get(0) : null;
     }
 
+    public T pop() {
+        try {
+            return this.remove(this.size() - 1);
+        }catch(IndexOutOfBoundsException e){
+            return null;
+        }
+    }
+
+    public T peek(){
+        return back();
+    }
+
     public void setStatus(GeoObject.Status status) {
         forEach(x -> x.setStatus(status));
     }
