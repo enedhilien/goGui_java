@@ -5,8 +5,7 @@ Ważniejsze rzeczy:
 * GoGui.saveJSON(String fileName)
 * vector -> GeoList
 
-Nie ma na razie wszystkich generatorów punktów.
-
+Sa chyba wszyskie potrzebne generatory punktow. Chyba wszystkie figury poza kolem mozna uzyskac z WielokontGeneratorStrategy, podajac punkty w roznej kolejnosci mozna zrobic tez figury z przecinajacymi sie liniami.
 
 
 Update note:
@@ -34,5 +33,6 @@ UpdateNote:
 
 Jak będzie czas to dojdę dlaczego tak się dzieje.
 
-
+IDE:
+Po sklonowaniu repo :"mvn clean install idea:idea" lub "mvn clean install eclipse:eclipse", w zaleznosci czego tam uzywacie.
 
