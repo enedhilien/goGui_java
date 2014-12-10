@@ -12,6 +12,7 @@ import project.structures.cycle.EdgesCycle;
 import project.structures.sweep.LinePair;
 import project.structures.sweep.T;
 
+import java.nio.file.Paths;
 import java.util.*;
 
 import static gogui.GoGui.saveJSON;
@@ -22,7 +23,7 @@ public class Main {
 
 
     private static final String INPUT_FILE_EXTENSION = ".txt";
-    private static final String LAB4_SRC_MAIN_RESOURCES = "project\\src\\main\\resources\\";
+    private static final String LAB4_SRC_MAIN_RESOURCES = Paths.get("project", "src", "main", "resources").toString();
 
     public static void main(String[] args) {
         String fileName = "map1";
@@ -37,19 +38,19 @@ public class Main {
     }
 
     private static void fireAlgorithmWithFiles(String fileName, String fileName2) {
-        GeoList<Point> polygonPoints = GoGui.loadPoints_ZMUDA(LAB4_SRC_MAIN_RESOURCES + fileName + INPUT_FILE_EXTENSION);
+        GeoList<Point> polygonPoints = GoGui.loadPoints_ZMUDA(Paths.get(LAB4_SRC_MAIN_RESOURCES,fileName + INPUT_FILE_EXTENSION).toString());
         Polygon polygon = new Polygon(polygonPoints);
         HalfEdgeDataStructure halfEdgeDataStructure = HalfEdgeDataStructure.from(polygon, "A");
 
-        GeoList<Point> polygonPoints2 = GoGui.loadPoints_ZMUDA(LAB4_SRC_MAIN_RESOURCES + fileName2 + INPUT_FILE_EXTENSION);
+        GeoList<Point> polygonPoints2 = GoGui.loadPoints_ZMUDA(Paths.get(LAB4_SRC_MAIN_RESOURCES, fileName2 + INPUT_FILE_EXTENSION).toString());
         Polygon polygon2 = new Polygon(polygonPoints2);
         HalfEdgeDataStructure halfEdgeDataStructure2 = HalfEdgeDataStructure.from(polygon2, "B");
 
 //        withIntersections(halfEdgeDataStructure, halfEdgeDataStructure2);
         fireAlgorithm(halfEdgeDataStructure, halfEdgeDataStructure2);
 
-        saveJSON("project\\src\\main\\resources\\project." + fileName2 + ".data.json");
-        saveJSON("results\\project." + fileName2 + ".data.json");
+        saveJSON(Paths.get("project","src", "main", "resources","project." + fileName2 + ".data.json").toString());
+//        saveJSON(Paths.get("results","project." + fileName2 + ".data.json").toString());
         GoGui.clear();
     }
 
