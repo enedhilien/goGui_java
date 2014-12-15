@@ -7,7 +7,9 @@ public class Point extends GeoObject implements Comparable {
     public final Comparator<Point> POLAR_ORDER_COMPARATOR = new PolarOrderComparator();
 
     public final Comparator<Point> REVERSED_POLAR_ORDER = new ReversedPolarOrderComparator();
-
+    
+    public static final Comparator<Point> X_ORDER_COMPARATOR = new XOrderComparator();
+            
     public static final Comparator<Point> Y_ORDER_COMPARATOR = new YOrderComparator();
 
     public double x, y;
@@ -71,6 +73,11 @@ public class Point extends GeoObject implements Comparable {
         else return 0;
     }
 
+    /**
+     * Default x order comparation.
+     * @param o
+     * @return
+     */
     @Override
     public int compareTo(Object o) {
         Point that = (Point) o;
@@ -182,6 +189,24 @@ public class Point extends GeoObject implements Comparable {
                     return 0;
 
             }
+
+        }
+    }
+
+    private static class XOrderComparator implements Comparator<Point> {
+
+        @Override
+        public int compare(Point o1, Point o2) {
+            if (o1.x!= o2.x) {
+                if (o1.x < o2.x) {
+                    return -1;
+                } else return 1;
+            } else if (o1.y < o2.y) {
+                return -1;
+            } else if (o1.y > o2.y) {
+                return 1;
+            }
+            return 0;
 
         }
     }

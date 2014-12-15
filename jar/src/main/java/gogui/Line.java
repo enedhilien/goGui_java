@@ -1,9 +1,13 @@
 package gogui;
 
+import java.util.Comparator;
+
 public class Line extends GeoObject {
 
     final Point point1;
     final Point point2;
+
+    public static final Comparator<Line> LEFT_END_X_COMPARATOR = new LeftEndXComparator();
 
     private Parameters parameters;
 
@@ -211,6 +215,14 @@ public class Line extends GeoObject {
             A = a;
             B = b;
             C = c;
+        }
+    }
+
+    public static class LeftEndXComparator implements Comparator<Line>{
+
+        @Override
+        public int compare(Line o1, Line o2) {
+            return Point.X_ORDER_COMPARATOR.compare(o1.getLeftPoint(), o2.getLeftPoint());
         }
     }
 }

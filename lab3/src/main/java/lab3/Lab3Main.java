@@ -5,6 +5,7 @@ import lab3.structures.LinePair;
 import lab3.structures.Q;
 import lab3.structures.T;
 
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -14,7 +15,7 @@ import static gogui.GoGui.*;
 
 public class Lab3Main {
 
-    public static final String LAB3_SRC_MAIN_RESOURCES = "lab3\\src\\main\\resources\\";
+    public static final String LAB3_SRC_MAIN_RESOURCES = Paths.get("lab3", "src", "main", "resources").toString();
     public static final String INPUT_FILE_EXTENSION = ".json";
 
     public static void main(String[] args) {
@@ -29,7 +30,7 @@ public class Lab3Main {
     }
 
     private static Set<Point> fireAlgorithm(String fileName) {
-        GeoList<Line> lines = loadLinesFromJson(LAB3_SRC_MAIN_RESOURCES + fileName + INPUT_FILE_EXTENSION);
+        GeoList<Line> lines = loadLinesFromJson(Paths.get(LAB3_SRC_MAIN_RESOURCES,fileName + INPUT_FILE_EXTENSION).toString());
         GeoList<Point> points = new GeoList<>();
         GeoList<Line> helper = new GeoList<>();
 
@@ -64,8 +65,8 @@ public class Lab3Main {
                 findIntersectionsWithNeighbouringLines(l2, q, t);
 
             } else {
-                pointToLine.get(p).activate();
                 Line currentLine = pointToLine.get(p);
+                currentLine.activate();
 
                 Point lineSecondPoint = getAnotherEnd(p, currentLine);
 
