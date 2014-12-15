@@ -18,17 +18,17 @@ public class Lab3 {
     public static final String LAB3_SRC_MAIN_RESOURCES = Paths.get("lab3", "src", "main", "resources").toString();
 
     public static void main(String[] args){
-        dupa("input.json");
+        fireAlgo("input.json");
         GoGui.clear();
-        dupa("input2.json");
+        fireAlgo("input2.json");
         GoGui.clear();
-        dupa("input3.json");
+        fireAlgo("input3.json");
         GoGui.clear();
-        dupa("input4.json");
+        fireAlgo("input4.json");
         GoGui.clear();
     }
 
-    public static void dupa(String fileName){
+    public static void fireAlgo(String fileName){
         GeoList<Line> lines = loadLinesFromJson(Paths.get(LAB3_SRC_MAIN_RESOURCES,fileName).toString());
         GeoList<Point> points = new GeoList<>();
         GeoList<Line> helper = new GeoList<>();
@@ -52,10 +52,18 @@ public class Lab3 {
 
             switch(first.state){
                 case LEFT:
+                    for(Line l : Q.get(first)){
+                        l.setStatus(GeoObject.Status.ACTIVE);
+
+                    }
                     NavigableSet<Line> set = Q.get(first);
                     T.addAll(set.stream().collect(Collectors.toList()));
                     break;
                 case RIGHT:
+                    for(Line l : Q.get(first)){
+                        l.setStatus(GeoObject.Status.PROCESSED);
+
+                    }
                     T.removeAll(Q.get(first).stream().collect(Collectors.toList()));
                     break;
                 case INTERSECTION:
@@ -77,6 +85,7 @@ public class Lab3 {
             Q.removeAll(first);
             helper.clear();
         }
+        snapshot();
         System.out.println(intersections.size());
         saveJSON(Paths.get(LAB3_SRC_MAIN_RESOURCES, fileName+"_result.json").toString());
 
