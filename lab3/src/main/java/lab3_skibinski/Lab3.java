@@ -31,7 +31,7 @@ public class Lab3 {
     public static void fireAlgo(String fileName){
         GeoList<Line> lines = loadLinesFromJson(Paths.get(LAB3_SRC_MAIN_RESOURCES,fileName).toString());
         GeoList<Point> points = new GeoList<>();
-        GeoList<Line> helper = new GeoList<>();
+        GeoList<Line> helper = new GeoList<>(); //broomsticks
 
         TreeMultimap<SmartPoint, Line> Q = TreeMultimap.create(Point.X_ORDER_COMPARATOR, Line.LEFT_END_X_COMPARATOR);
         TreeMultiset<Line> T = TreeMultiset.create(Line.LEFT_END_X_COMPARATOR);

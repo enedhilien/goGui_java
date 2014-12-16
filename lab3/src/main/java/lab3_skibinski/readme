@@ -1,0 +1,5 @@
+Struktura zdarzen Q zostala zaimplementowana na TreeMultimap<SmartPoint, Line>
+, gdzie SmartPoint enkapsuluje Point i dodatkowo zaiwera informacje czy punkt
+jest lewym, prawym koncem odcinka czy punktem przeciecia.
+Struktura T jest oparta na TreeMultiset. Obie struktury bazuja na rb tree, wiec sa samorownozacymi bst. 
+Algorytm zaimplementowany na podstawie pseudokodu z wykladu
