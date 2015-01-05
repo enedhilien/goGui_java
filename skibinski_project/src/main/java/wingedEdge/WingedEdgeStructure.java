@@ -28,6 +28,10 @@ public class WingedEdgeStructure {
             e.setnVertex(v1);
             e.setpVertex(v2);
             e.setnFace(newFace);
+            v1.setEdge(e);
+            v2.setEdge(e);
+            vertices.add(v1);
+            vertices.add(v2);
             newEdges.add(e);
         }
         int n = newEdges.size();
@@ -35,6 +39,8 @@ public class WingedEdgeStructure {
             e = newEdges.get(i);
             e.setNcw(newEdges.get((i-1)%n < 0 ? ((i-1)%n)+n : (i-1)%n));
             e.setNccw(newEdges.get((i+1)%n));
+            e.setPcw(e.getNcw());
+            e.setPccw(e.getNccw());
         }
         newFace.setEdge(newEdges.get(0));
         faces.add(newFace);
@@ -68,6 +74,7 @@ public class WingedEdgeStructure {
         }else {
             merged.add(e2);
         }
+
         edges = merged;
     }
 

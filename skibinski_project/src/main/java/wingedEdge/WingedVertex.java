@@ -31,4 +31,8 @@ public class WingedVertex extends Point{
         }
         return newPoint;
     }
+
+    public void setEdge(WingedEdge edge) {
+        this.edge = edge;
+    }
 }
