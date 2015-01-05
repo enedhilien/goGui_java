@@ -1,19 +1,19 @@
-package gogui.wingedEdge;
+package wingedEdge;
 
 import gogui.Point;
 
 /**
  * Created by testuser on 12/10/14.
  */
-public class Vertex extends Point{
-    Edge edge;
+public class WingedVertex extends Point{
+    WingedEdge edge;
     int id;
 
-    public Vertex(Edge e) {
+    public WingedVertex(WingedEdge e) {
         this.edge = e;
     }
 
-    public Vertex(double x, double y, int id){
+    public WingedVertex(double x, double y, int id){
         super(x,y);
         this.id = id;
     }
@@ -23,8 +23,8 @@ public class Vertex extends Point{
         return super.toString();
     }
 
-    public static Vertex from(Vertex p) {
-        Vertex newPoint = new Vertex(p.x, p.y, p.id);
+    public static WingedVertex from(WingedVertex p) {
+        WingedVertex newPoint = new WingedVertex(p.x, p.y, p.id);
         newPoint.setStatus(p.getStatus());
         if (p.hasCustomColor()) {
             newPoint.setColor(p.getColor());

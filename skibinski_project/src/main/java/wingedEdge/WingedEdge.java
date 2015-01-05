@@ -1,4 +1,4 @@
-package gogui.wingedEdge;
+package wingedEdge;
 
 import gogui.GeoObject;
 import gogui.Line;
@@ -9,86 +9,86 @@ import java.util.Comparator;
 /**
  * Created by testuser on 12/10/14.
  */
-public class Edge extends GeoObject{
+public class WingedEdge extends GeoObject{
 
-    public final static Comparator<Edge> ID_COMPARATOR = new IdComparator();
+    public final static Comparator<WingedEdge> ID_COMPARATOR = new IdComparator();
 
-    public Edge(Vertex pVertex, Vertex nVertex) {
+    public WingedEdge(WingedVertex pVertex, WingedVertex nVertex) {
         this.pVertex = pVertex;
         this.nVertex = nVertex;
     }
 
-    public Edge() {
+    public WingedEdge() {
 
     }
 
-    public Vertex getpVertex() {
+    public WingedVertex getpVertex() {
         return pVertex;
     }
 
-    public void setpVertex(Vertex pVertex) {
+    public void setpVertex(WingedVertex pVertex) {
         this.pVertex = pVertex;
     }
 
-    public Vertex getnVertex() {
+    public WingedVertex getnVertex() {
         return nVertex;
     }
 
-    public void setnVertex(Vertex nVertex) {
+    public void setnVertex(WingedVertex nVertex) {
         this.nVertex = nVertex;
     }
 
-    public Face getpFace() {
+    public WingedFace getpFace() {
         return pFace;
     }
 
-    public void setpFace(Face pFace) {
+    public void setpFace(WingedFace pFace) {
         this.pFace = pFace;
     }
 
-    public Face getnFace() {
+    public WingedFace getnFace() {
         return nFace;
     }
 
-    public void setnFace(Face nFace) {
+    public void setnFace(WingedFace nFace) {
         this.nFace = nFace;
     }
 
-    public Edge getPcw() {
+    public WingedEdge getPcw() {
         return pcw;
     }
 
-    public void setPcw(Edge pcw) {
+    public void setPcw(WingedEdge pcw) {
         this.pcw = pcw;
     }
 
-    public Edge getNcw() {
+    public WingedEdge getNcw() {
         return ncw;
     }
 
-    public void setNcw(Edge ncw) {
+    public void setNcw(WingedEdge ncw) {
         this.ncw = ncw;
     }
 
-    public Edge getNccw() {
+    public WingedEdge getNccw() {
         return nccw;
     }
 
-    public void setNccw(Edge nccw) {
+    public void setNccw(WingedEdge nccw) {
         this.nccw = nccw;
     }
 
-    public Edge getPccw() {
+    public WingedEdge getPccw() {
         return pccw;
     }
 
-    public void setPccw(Edge pccw) {
+    public void setPccw(WingedEdge pccw) {
         this.pccw = pccw;
     }
 
-    private Vertex pVertex, nVertex;
-    private Face pFace, nFace;
-    private Edge pcw, ncw, nccw, pccw;
+    private WingedVertex pVertex, nVertex;
+    private WingedFace pFace, nFace;
+    private WingedEdge pcw, ncw, nccw, pccw;
 
     @Override
     public String toString() {
@@ -105,16 +105,16 @@ public class Edge extends GeoObject{
     }
 
 
-    private static class IdComparator implements Comparator<Edge>{
+    private static class IdComparator implements Comparator<WingedEdge>{
 
         @Override
-        public int compare(Edge o1, Edge o2) {
+        public int compare(WingedEdge o1, WingedEdge o2) {
             return o1.getId().compareTo(o2.getId());
         }
 
     }
 
-    public static Line from(Edge edge) {
+    public static Line from(WingedEdge edge) {
         Line newLine = new Line(new Point(edge.pVertex.x, edge.pVertex.y), new Point(edge.nVertex.x, edge.nVertex.y));
         newLine.setStatus(edge.getStatus());
         if (edge.hasCustomColor()) {

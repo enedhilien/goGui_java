@@ -1,4 +1,4 @@
-package gogui.wingedEdge;
+package wingedEdge;
 
 import gogui.GeoObject;
 
@@ -9,19 +9,19 @@ import java.util.Vector;
 /**
  * Created by testuser on 12/10/14.
  */
-public class Face extends GeoObject {
-    Edge edge;
+public class WingedFace extends GeoObject {
+    WingedEdge edge;
     String id;
 
-    public Face(Vector<Vertex> vertices) {
+    public WingedFace(Vector<WingedVertex> vertices) {
         setId(vertices);
     }
 
-    public Edge getEdge() {
+    public WingedEdge getEdge() {
         return edge;
     }
 
-    public void setEdge(Edge edge) {
+    public void setEdge(WingedEdge edge) {
         this.edge = edge;
     }
 
@@ -29,9 +29,9 @@ public class Face extends GeoObject {
         return id;
     }
 
-    public void setId(Vector<Vertex> vertices) {
+    public void setId(Vector<WingedVertex> vertices) {
         ArrayList<Integer> ids = new ArrayList<>();
-        for (Vertex v : vertices) {
+        for (WingedVertex v : vertices) {
             ids.add(v.id);
         }
         Collections.sort(ids);

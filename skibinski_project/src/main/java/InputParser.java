@@ -1,5 +1,5 @@
 import gogui.Point;
-import gogui.wingedEdge.Vertex;
+import wingedEdge.WingedVertex;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -13,8 +13,8 @@ import java.util.Vector;
 public class InputParser {
 
     private String filePath;
-    private Vector<Vertex> points;
-    private Vector<Vector<Vertex>> triangles;
+    private Vector<WingedVertex> points;
+    private Vector<Vector<WingedVertex>> triangles;
 
     public InputParser(String filePath){
         this.filePath = filePath;
@@ -22,8 +22,8 @@ public class InputParser {
 
     public void parse() throws IOException {
         Path path = Paths.get(filePath);
-        Vector<Vertex> points = new Vector<>();
-        Vector<Vector<Vertex>> triangles = new Vector<>();
+        Vector<WingedVertex> points = new Vector<>();
+        Vector<Vector<WingedVertex>> triangles = new Vector<>();
         double x,y;
         int a,b,c;
         try(Scanner scanner = new Scanner(path)){
@@ -32,14 +32,14 @@ public class InputParser {
                 for(int i=0;i<pointsNumber;i++){
                     x = scanner.nextDouble();
                     y = scanner.nextDouble();
-                    points.add(new Vertex(x,y,i));
+                    points.add(new WingedVertex(x,y,i));
                 }
                 int triangleNumber = scanner.nextInt();
                 for(int i=0;i<triangleNumber;i++){
                     a = scanner.nextInt();
                     b = scanner.nextInt();
                     c = scanner.nextInt();
-                    Vector<Vertex> p = new Vector<>();
+                    Vector<WingedVertex> p = new Vector<>();
                     p.add(points.get(a));p.add(points.get(b));p.add(points.get(c));
                     p.sort(Point.Y_ORDER_COMPARATOR);
                     p.sort(Point.X_ORDER_COMPARATOR);
@@ -53,11 +53,11 @@ public class InputParser {
         }
     }
 
-    public Vector<Vector<Vertex>> getTriangles() {
+    public Vector<Vector<WingedVertex>> getTriangles() {
         return triangles;
     }
 
-    public Vector<Vertex> getPoints() {
+    public Vector<WingedVertex> getPoints() {
         return points;
     }
 }

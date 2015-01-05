@@ -1,4 +1,4 @@
-package gogui.wingedEdge;
+package wingedEdge;
 
 import gogui.GeoList;
 
@@ -10,21 +10,21 @@ import java.util.Vector;
  */
 public class WingedEdgeStructure {
 
-    public GeoList<Edge> edges = new GeoList<>();
-    public Vector<Face> faces = new Vector<>();
-    public Vector<Vertex> vertices = new Vector<>();
+    public GeoList<WingedEdge> edges = new GeoList<>();
+    public Vector<WingedFace> faces = new Vector<>();
+    public Vector<WingedVertex> vertices = new Vector<>();
 
 
-    public void processFace(Vector<Vertex> face) {
-        Vertex[] vertexes = new Vertex[face.size()];
+    public void processFace(Vector<WingedVertex> face) {
+        WingedVertex[] vertexes = new WingedVertex[face.size()];
         vertexes = face.toArray(vertexes);
-        Vertex v1,v2;
-        Edge e;
-        Vector<Edge> newEdges = new Vector<>();
-        Face newFace = new Face(face);
+        WingedVertex v1,v2;
+        WingedEdge e;
+        Vector<WingedEdge> newEdges = new Vector<>();
+        WingedFace newFace = new WingedFace(face);
         for(int i=0; i<face.size();i++){
             v1 = face.get(i); v2 = face.get((i+1)%face.size());
-            e = new Edge();
+            e = new WingedEdge();
             e.setnVertex(v1);
             e.setpVertex(v2);
             e.setnFace(newFace);
@@ -42,10 +42,10 @@ public class WingedEdgeStructure {
     }
 
     public void mergeFaces(){
-        edges.sort(Edge.ID_COMPARATOR);
-        Iterator<Edge> it = edges.iterator();
-        GeoList<Edge> merged = new GeoList<>();
-        Edge e1, e2;
+        edges.sort(WingedEdge.ID_COMPARATOR);
+        Iterator<WingedEdge> it = edges.iterator();
+        GeoList<WingedEdge> merged = new GeoList<>();
+        WingedEdge e1, e2;
         int n = edges.size();
         for(int i=0;i<n-1;i++){;
             e1 = edges.get(i);

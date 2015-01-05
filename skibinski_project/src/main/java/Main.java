@@ -2,10 +2,10 @@ import gogui.GeoList;
 import gogui.GoGui;
 import gogui.Line;
 import gogui.Polygon;
-import gogui.wingedEdge.Edge;
-import gogui.wingedEdge.Face;
-import gogui.wingedEdge.Vertex;
-import gogui.wingedEdge.WingedEdgeStructure;
+import wingedEdge.WingedEdge;
+import wingedEdge.WingedEdgeStructure;
+import wingedEdge.WingedFace;
+import wingedEdge.WingedVertex;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -38,7 +38,7 @@ public class Main {
 //                snapshot();
 //            }
 
-            for(Vector<Vertex> triangle: parser.getTriangles()){
+            for(Vector<WingedVertex> triangle: parser.getTriangles()){
                 structure.processFace(triangle);
             }
             System.out.println(structure.edges);
@@ -46,8 +46,8 @@ public class Main {
             clear();
 
             GeoList<Line> lines = new GeoList<>();
-            for(Edge e: structure.edges){
-                Line from = Edge.from(e);
+            for(WingedEdge e: structure.edges){
+                Line from = WingedEdge.from(e);
                 lines.add(from);
                 snapshot();
             }
@@ -55,11 +55,11 @@ public class Main {
 
             clear();
             lines = new GeoList<>();
-            for(Face f:structure.faces){
-                Edge start = f.getEdge();
-                Edge e = start;
+            for(WingedFace f:structure.faces){
+                WingedEdge start = f.getEdge();
+                WingedEdge e = start;
                 do{
-                    lines.add(Edge.from(e));
+                    lines.add(WingedEdge.from(e));
                     snapshot();
                     e = e.getNcw();
                 }while(e!=start);
@@ -68,11 +68,11 @@ public class Main {
 
             clear();
             lines = new GeoList<>();
-            for(Face f:structure.faces){
-                Edge start = f.getEdge();
-                Edge e = start;
+            for(WingedFace f:structure.faces){
+                WingedEdge start = f.getEdge();
+                WingedEdge e = start;
                 do{
-                    lines.add(Edge.from(e));
+                    lines.add(WingedEdge.from(e));
                     snapshot();
                     e = e.getNccw();
                 }while(e!=start);
