@@ -30,6 +30,15 @@ public class Polygon extends GeoObject {
         return points;
     }
 
+    public Line getLeftEdge(Point p){
+        for(Line l:lines){
+            if(l.getRightPoint().equals(p)){
+                return l;
+            }
+        }
+        return null;
+    }
+
     public Point getNextNeighbor(Point point) {
         int pointIndex = points.indexOf(point);
         Point result;

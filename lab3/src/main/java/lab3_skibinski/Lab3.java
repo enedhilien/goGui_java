@@ -34,7 +34,7 @@ public class Lab3 {
         GeoList<Line> helper = new GeoList<>(); //broomsticks
 
         TreeMultimap<SmartPoint, Line> Q = TreeMultimap.create(Point.X_ORDER_COMPARATOR, Line.LEFT_END_X_COMPARATOR);
-        TreeMultiset<Line> T = TreeMultiset.create(Line.LEFT_END_X_COMPARATOR);
+        TreeMultiset<Line> T = TreeMultiset.create(Line.LEFT_END_Y_COMPARATOR);
         for(Line l : lines){
             points.push_back(l.getPoint1());
             points.push_back(l.getPoint2());

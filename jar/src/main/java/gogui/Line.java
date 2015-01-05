@@ -9,6 +9,7 @@ public class Line extends GeoObject {
 
     public static final Comparator<Line> LEFT_END_X_COMPARATOR = new LeftEndXComparator();
 
+    public static final Comparator<Line> LEFT_END_Y_COMPARATOR = new LeftEndYComparator();
     private Parameters parameters;
 
     public Line(Point point1, Point point2) {
@@ -223,6 +224,14 @@ public class Line extends GeoObject {
         @Override
         public int compare(Line o1, Line o2) {
             return Point.X_ORDER_COMPARATOR.compare(o1.getLeftPoint(), o2.getLeftPoint());
+        }
+    }
+
+    public static class LeftEndYComparator implements Comparator<Line>{
+
+        @Override
+        public int compare(Line o1, Line o2) {
+            return Point.Y_ORDER_COMPARATOR.compare(o1.getLeftPoint(), o2.getLeftPoint());
         }
     }
 }

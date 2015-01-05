@@ -1,0 +1,10 @@
+2. Sprawdzanie monotonicznosci polega na zliczaniu minimow lokalnych wzgledem kolejnych punktow, gdzie punkty sa uszeregowane w tablicy 
+w kolejnosci ich wystepowania w wielokacie. Jezeli jest wiecej niz jedno(czyli skrajnie niski punkt), to wielokat nie jest y monotoniczny.
+Za "http://cs.stackexchange.com/questions/1577/testing-polygon-for-monotonicity"
+5. Struktury przechowujace wielokat i triangulacje to kontenery GeoList<T>, czyli standardowe struktury danych w GoGui. 
+Operuja na listach punktow i wierzcholkow, dajac proste mozliwosci wizualizacyjne, natomiast nie bedac najbardziej wydajne do zastosowan
+praktycznych.
+6. Przetestowano "zazebiajace i nachodzace na siebie" y monotoniczne wielokaty do triangulacji oraz niemonotoniczne do klasyfikacji. 
+Wszystkie przeprowadzone testy przebiegly pomyslnie.
+Wybrane wyniki sa w folderze w formie obrazow oraz plikow json umozliwiajacych wizualizacje. Nastepuje to przez odpalenie "gogui_visualisation/index.html"
+i wczytanie odpowiednich plikow.

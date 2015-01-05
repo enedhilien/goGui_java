@@ -14,6 +14,8 @@ public class Point extends GeoObject implements Comparable {
 
     public double x, y;
 
+    private Classification classification = null;
+
     public Point(double x, double y) {
         this.x = x;
         this.y = y;
@@ -126,6 +128,36 @@ public class Point extends GeoObject implements Comparable {
         return new Point(this.x - relative.x, this.y - relative.y);
     }
 
+    /**
+     * Returns directed angle in radians between vectors from this->p1 and this->p2
+     * @param p1 Left point
+     * @param p2 Right point
+     * @return angle in radians
+     */
+    public double getAngleBetweenPoints(Point p1, Point p2){
+        double v1y = this.y - p1.y;
+        double v2y = this.y - p2.y;
+        double v1x = this.x - p1.x;
+        double v2x = this.x - p2.x;
+        return Math.atan2(v2y, v2x) - Math.atan2(v1y, v1x);
+    }
+
+    /**
+     * Return if p1 is below p2
+     * @param p1
+     * @return
+     */
+    public static boolean isBelow(Point p1, Point p2){
+        return p1.y < p2.y;
+    }
+    /**
+     * Return if p1 is above p2
+     * @param p1
+     * @return
+     */
+    public static boolean isAbove(Point p1, Point p2){
+        return p1.y > p2.y;
+    }
     private class PolarOrderComparator implements Comparator<Point> {
         @Override
         public int compare(Point q1, Point q2) {
@@ -209,5 +241,28 @@ public class Point extends GeoObject implements Comparable {
             return 0;
 
         }
+    }
+
+    public static enum Classification{
+        START("green"), END("red"), MERGE("blue"), SPLIT("aqua"), REGULAR("brown");
+
+        private String color;
+
+        Classification(String color){
+            this.color = color;
+        }
+        public String getColor(){
+            return color;
+        }
+
+    }
+
+    public void setClassification(Classification c){
+        this.classification = c;
+        setColor(c.getColor());
+    }
+
+    public Classification getClassification(){
+        return this.classification;
     }
 }
