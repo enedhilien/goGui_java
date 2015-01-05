@@ -9,9 +9,12 @@ public class State {
     private GeoList<Point> points;
     private GeoList<Line> lines;
 
+
     public State(GeoList<Point> points, GeoList<Line> lines) {
+
         this.points = points;
         this.lines = lines;
+
     }
 
     public GeoList<Point> getPoints() {

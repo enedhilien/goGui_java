@@ -1,4 +1,5 @@
 import gogui.Point;
+import gogui.wingedEdge.Vertex;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -12,8 +13,8 @@ import java.util.Vector;
 public class InputParser {
 
     private String filePath;
-    private Vector<Point> points;
-    private Vector<Vector<Point>> triangles;
+    private Vector<Vertex> points;
+    private Vector<Vector<Vertex>> triangles;
 
     public InputParser(String filePath){
         this.filePath = filePath;
@@ -21,8 +22,8 @@ public class InputParser {
 
     public void parse() throws IOException {
         Path path = Paths.get(filePath);
-        Vector<Point> points = new Vector<>();
-        Vector<Vector<Point>> triangles = new Vector<>();
+        Vector<Vertex> points = new Vector<>();
+        Vector<Vector<Vertex>> triangles = new Vector<>();
         double x,y;
         int a,b,c;
         try(Scanner scanner = new Scanner(path)){
@@ -31,15 +32,18 @@ public class InputParser {
                 for(int i=0;i<pointsNumber;i++){
                     x = scanner.nextDouble();
                     y = scanner.nextDouble();
-                    points.add(new Point(x,y));
+                    points.add(new Vertex(x,y,i));
                 }
                 int triangleNumber = scanner.nextInt();
                 for(int i=0;i<triangleNumber;i++){
                     a = scanner.nextInt();
                     b = scanner.nextInt();
                     c = scanner.nextInt();
-                    Vector<Point> p = new Vector<>();
+                    Vector<Vertex> p = new Vector<>();
                     p.add(points.get(a));p.add(points.get(b));p.add(points.get(c));
+                    p.sort(Point.Y_ORDER_COMPARATOR);
+                    p.sort(Point.X_ORDER_COMPARATOR);
+                    p.sort(p.get(0).POLAR_ORDER_COMPARATOR);
                     triangles.add(p);
                 }
             }
@@ -49,11 +53,11 @@ public class InputParser {
         }
     }
 
-    public Vector<Vector<Point>> getTriangles() {
+    public Vector<Vector<Vertex>> getTriangles() {
         return triangles;
     }
 
-    public Vector<Point> getPoints() {
+    public Vector<Vertex> getPoints() {
         return points;
     }
 }

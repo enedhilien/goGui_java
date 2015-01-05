@@ -146,6 +146,7 @@ public class JsonPrinter {
         return Json.createObjectBuilder().add("lines", linesArray).add("points", pointsArray).build();
     }
 
+
     private String getFinalColor(Point p1, String p2) {
         if ( p1.hasCustomColor()) {
             return p1.getColor();
