@@ -58,8 +58,8 @@ public class WingedEdgeStructure {
             e2 = edges.get(i+1);
             if(e1.getId().equals(e2.getId())){
                 e1.setpFace(e2.getnFace());
-                e1.setPcw(e2.getNcw());
-                e1.setPccw(e2.getNccw());
+                e1.setPccw(e2.getNcw());
+                e1.setPcw(e2.getNccw());
                 i++;
             }
             merged.add(e1);
@@ -68,13 +68,13 @@ public class WingedEdgeStructure {
         e2 = edges.get(n-1);
         if(e1.getId().equals(e2.getId())){
             e1.setpFace(e2.getnFace());
-            e1.setPcw(e2.getNcw());
-            e1.setPccw(e2.getNccw());
+            e1.setPccw(e2.getNcw());
+            e1.setPcw(e2.getNccw());
             merged.add(e1);
         }else {
             merged.add(e2);
         }
-
+        System.out.println(merged.size());
         edges = merged;
     }
 

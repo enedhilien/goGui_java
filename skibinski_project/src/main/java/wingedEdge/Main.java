@@ -1,3 +1,5 @@
+package wingedEdge;
+
 import gogui.GeoList;
 import gogui.GoGui;
 import gogui.Line;
@@ -61,7 +63,11 @@ public class Main {
                 do{
                     lines.add(WingedEdge.from(e));
                     snapshot();
-                    e = e.getNcw();
+                    if(e.getnFace() == f){
+                        e = e.getNccw();
+                    }else{
+                        e = e.getNcw();
+                    }
                 }while(e!=start);
             }
             GoGui.saveJSON(Paths.get(RESOURCE_PATH, "face_traverse_cw.json").toString());
@@ -74,7 +80,11 @@ public class Main {
                 do{
                     lines.add(WingedEdge.from(e));
                     snapshot();
-                    e = e.getNccw();
+                    if(e.getnFace() == f){
+                        e = e.getNccw();
+                    }else{
+                        e = e.getPccw();
+                    }
                 }while(e!=start);
             }
             GoGui.saveJSON(Paths.get(RESOURCE_PATH, "face_traverse_ccw.json").toString());
