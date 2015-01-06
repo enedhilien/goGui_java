@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.Vector;
 
 import static gogui.GoGui.clear;
+import static gogui.GoGui.registerContainer;
 import static gogui.GoGui.snapshot;
 
 /**
@@ -43,16 +44,16 @@ public class Main {
             structure.mergeFaces();
             clear();
 
-            GeoList<Line> lines = new GeoList<>();
+            GeoList<Line> mesh = new GeoList<>();
             for(WingedEdge e: structure.edges){
                 Line from = WingedEdge.from(e);
-                lines.add(from);
+                mesh.add(from);
                 snapshot();
             }
             GoGui.saveJSON(Paths.get(RESOURCE_PATH, "edges_iteration.json").toString());
 
             clear();
-            lines = new GeoList<>();
+            GeoList<Line> lines = new GeoList<>();
             for(WingedFace f:structure.faces){
                 WingedEdge start = f.getEdge();
                 WingedEdge e = start;
@@ -84,6 +85,27 @@ public class Main {
                 }while(e!=start);
             }
             GoGui.saveJSON(Paths.get(RESOURCE_PATH, "face_traverse_ccw.json").toString());
+
+            clear();
+            registerContainer(mesh);
+            snapshot();
+            lines = new GeoList<>();
+
+            WingedVertex v = structure.vertices.get(7);
+            WingedEdge start = v.edge;
+            WingedEdge e = start;
+            do{
+                Line line = WingedEdge.from(e);
+                line.setColor("red");
+                lines.add(line);
+                    snapshot();
+                    if(e.getnVertex() == v){
+                        e = e.getNcw();
+                    }else {
+                        e = e.getPcw();
+                    }
+                }while(e!=start);
+            GoGui.saveJSON(Paths.get(RESOURCE_PATH, "vertex_traverse.json").toString());
 
         } catch (IOException e) {
             e.printStackTrace();

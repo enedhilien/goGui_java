@@ -1,9 +1,13 @@
 package halfEdge;
 
+import gogui.GeoObject;
+import gogui.Line;
+import gogui.Point;
+
 /**
  * Created by testuser on 1/5/15.
  */
-public class HalfEdge {
+public class HalfEdge extends GeoObject{
     HalfEdge nextEdge;
     HalfEdge prevEdge;
 
@@ -65,6 +69,17 @@ public class HalfEdge {
     HalfEdge symEdge;
     HalfVertex prevVertex, nextVertex;
     HalfFace face;
+
+    public static Line from(HalfEdge line) {
+
+        Line newLine = new Line(new Point(line.getPrevVertex().x, line.getPrevVertex().y),
+                new Point(line.getNextVertex().x, line.getNextVertex().y));
+        newLine.setStatus(line.getStatus());
+        if (line.hasCustomColor()) {
+            newLine.setColor(line.getColor());
+        }
+        return newLine;
+    }
 
 
 

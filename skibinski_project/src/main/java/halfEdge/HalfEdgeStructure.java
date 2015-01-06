@@ -1,7 +1,5 @@
 package halfEdge;
 
-import gogui.Point;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +27,8 @@ public class HalfEdgeStructure {
             v1 = vertexes[i];
             v2 = vertexes[(i + 1) % face.size()];
             vertices.put(v1.id, v1);
+            v1.edge = edge;
+            v2.edge = edge;
             edge.setPrevVertex(v1);
             edge.setNextVertex(v2);
             edge.setFace(newFace);
@@ -61,7 +61,7 @@ public class HalfEdgeStructure {
             HalfEdge current = newEdgesArray[i];
             current.setNextEdge(next);
             current.setPrevEdge(prev);
-            current.setSymEdge(current);
+//            current.setSymEdge(current);
 
         }
 
@@ -71,6 +71,8 @@ public class HalfEdgeStructure {
         return v1.id + "" + v2.id;
     }
 
+
+
     public void merge(){
         Map<String, HalfEdge> merged = new HashMap<>();
         for(String key:edges.keySet()){
@@ -79,37 +81,37 @@ public class HalfEdgeStructure {
 
             ArrayList<HalfEdge> halfEdges = edges.get(key);
             HalfEdge pairedEdge;
-            if(halfEdges.size()>1){
-                HalfEdge e1 = halfEdges.get(0);
-                HalfEdge e2 = halfEdges.get(1);
-                int ccw = Point.ccw(e1.getPrevVertex(), e1.nextEdge.getNextVertex(), e1.getNextVertex());
-                pairedEdge = new HalfEdge();
-                if(ccw==-1){
-                    //e1 left, e2 right
-                    pairedEdge.setSymEdge(e1);
-                    e1.setSymEdge(pairedEdge);
-
-                    pairedEdge.setNextVertex(e1.getPrevVertex());
-                    pairedEdge.setPrevVertex(e1.getNextVertex());
-                    pairedEdge.setFace(e2.getFace());
-                    halfEdges.remove(e2);
-                    merged.put(e1.getId(), e1);
-                }else{
-                    pairedEdge.setSymEdge(e2);
-                    e2.setSymEdge(pairedEdge);
-
-                    pairedEdge.setNextVertex(e2.getPrevVertex());
-                    pairedEdge.setPrevVertex(e2.getNextVertex());
-                    pairedEdge.setFace(e1.getFace());
-                    halfEdges.remove(e1);
-                    merged.put(e2.getId(), e2);
-                }
-                merged.put(pairedEdge.getId(), pairedEdge);
-            }
-            else {
+//            if(halfEdges.size()>1){
+//                HalfEdge e1 = halfEdges.get(0);
+//                HalfEdge e2 = halfEdges.get(1);
+//                int ccw = Point.ccw(e1.getPrevVertex(), e1.nextEdge.getNextVertex(), e1.getNextVertex());
+//                pairedEdge = new HalfEdge();
+//                if(ccw==-1){
+//                    //e1 left, e2 right
+//                    pairedEdge.setSymEdge(e1);
+//                    e1.setSymEdge(pairedEdge);
+//
+//                    pairedEdge.setNextVertex(e1.getPrevVertex());
+//                    pairedEdge.setPrevVertex(e1.getNextVertex());
+//                    pairedEdge.setFace(e2.getFace());
+//                    halfEdges.remove(e2);
+//                    merged.put(e1.getId(), e1);
+//                }else{
+//                    pairedEdge.setSymEdge(e2);
+//                    e2.setSymEdge(pairedEdge);
+//
+//                    pairedEdge.setNextVertex(e2.getPrevVertex());
+//                    pairedEdge.setPrevVertex(e2.getNextVertex());
+//                    pairedEdge.setFace(e1.getFace());
+//                    halfEdges.remove(e1);
+//                    merged.put(e2.getId(), e2);
+//                }
+//                merged.put(pairedEdge.getId(), pairedEdge);
+//            }
+//            else {
                 HalfEdge edge = halfEdges.get(0);
                 merged.put(edge.getId(), halfEdges.get(0));
-            }
+//            }
         }
         System.out.println("###");
         for(String key: merged.keySet()){
