@@ -7,6 +7,9 @@ public class HalfEdge {
     HalfEdge nextEdge;
     HalfEdge prevEdge;
 
+    public String getId(){
+        return prevVertex.id + "" + nextVertex.id;
+    }
     public HalfEdge getNextEdge() {
         return nextEdge;
     }
@@ -53,6 +56,10 @@ public class HalfEdge {
 
     public void setFace(HalfFace face) {
         this.face = face;
+    }
+
+    public String toString(){
+        return HalfEdgeStructure.getId(prevVertex, nextVertex) + " -> " + face.getId();
     }
 
     HalfEdge symEdge;

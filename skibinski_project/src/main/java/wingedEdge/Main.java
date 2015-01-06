@@ -4,10 +4,6 @@ import gogui.GeoList;
 import gogui.GoGui;
 import gogui.Line;
 import gogui.Polygon;
-import wingedEdge.WingedEdge;
-import wingedEdge.WingedEdgeStructure;
-import wingedEdge.WingedFace;
-import wingedEdge.WingedVertex;
 
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -22,7 +18,7 @@ import static gogui.GoGui.snapshot;
 public class Main {
 
     private static final String RESOURCE_PATH = Paths.get("skibinski_project","src", "main", "resources").toString();
-    private static final String FILE_NAME = "input.txt";
+    private static final String FILE_NAME = "input2.txt";
 
     private static Vector<Polygon> triangles = new Vector<>();
 

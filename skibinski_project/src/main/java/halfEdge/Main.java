@@ -16,7 +16,7 @@ import static gogui.GoGui.snapshot;
 public class Main {
 
     private static final String RESOURCE_PATH = Paths.get("skibinski_project", "src", "main", "resources").toString();
-    private static final String FILE_NAME = "input.txt";
+    private static final String FILE_NAME = "input2.txt";
     public static HalfEdgeStructure structure = new HalfEdgeStructure();
     private static Vector<Polygon> triangles = new Vector<>();
 
@@ -37,51 +37,23 @@ public class Main {
             for (Vector<HalfVertex> triangle : parser.getTriangles()) {
                 structure.processFace(triangle);
             }
-//            System.out.println(structure.edges);
-//            structure.mergeFaces();
-//            clear();
-//
-//            GeoList<Line> lines = new GeoList<>();
-//            for (WingedEdge e : structure.edges) {
-//                Line from = WingedEdge.from(e);
-//                lines.add(from);
-//                snapshot();
-//            }
-//            GoGui.saveJSON(Paths.get(RESOURCE_PATH, "edges_iteration.json").toString());
-//
-//            clear();
-//            lines = new GeoList<>();
-//            for (WingedFace f : structure.faces) {
-//                WingedEdge start = f.getEdge();
-//                WingedEdge e = start;
-//                do {
-//                    lines.add(WingedEdge.from(e));
-//                    snapshot();
-//                    if (e.getnFace() == f) {
-//                        e = e.getNccw();
-//                    } else {
-//                        e = e.getNcw();
-//                    }
-//                } while (e != start);
-//            }
-//            GoGui.saveJSON(Paths.get(RESOURCE_PATH, "face_traverse_cw.json").toString());
-//
-//            clear();
-//            lines = new GeoList<>();
-//            for (WingedFace f : structure.faces) {
-//                WingedEdge start = f.getEdge();
-//                WingedEdge e = start;
-//                do {
-//                    lines.add(WingedEdge.from(e));
-//                    snapshot();
-//                    if (e.getnFace() == f) {
-//                        e = e.getNccw();
-//                    } else {
-//                        e = e.getPccw();
-//                    }
-//                } while (e != start);
-//            }
-//            GoGui.saveJSON(Paths.get(RESOURCE_PATH, "face_traverse_ccw.json").toString());
+            structure.merge();
+
+//            HalfEdge start = structure.halfEdges.get("68");
+//            HalfEdge e = start;
+//            do{
+//                System.out.println(e.face);
+//                e = e.getSymEdge().getNextEdge();
+//            }while(e != start);
+
+            HalfFace face = structure.faces.get("067");
+            HalfEdge start = face.getEdge();
+            HalfEdge e = start;
+            do{
+                System.out.println(e);
+                e = e.getNextEdge();
+            }while(e != start);
+
 
         } catch (IOException e) {
             e.printStackTrace();
